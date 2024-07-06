@@ -1,10 +1,10 @@
 require("dotenv").config();
+const DISCORD_TOKEN = process.env;
 const fs = require("node:fs"); //NODE.JS's Native File System (choose directory/file navigation)
 const path = require("node:path"); //Node.js's Native Pathing Utility Module. helps construct paths to files and directories & automatically detects OS.
 const { UpvoteContainer, OnNewMessage } = require("./commands/upvoting/UpvoteContainer.js"); //Fetch UpvoteContainer
 const { color } = require("./public_containers/color.js");
 
-const DISCORD_TOKEN = process.env;
 //import { Client, GatewayIntentBits, ButtonBuilder, ButtonStyle, TextInputBuilder, TextInputStyle, Collection} from 'discord.js';
 const { Client, GatewayIntentBits, Collection, Events, ActivityType, PresenceUpdateStatus, EmbedBuilder, managerToFetchingStrategyOptions, GuildDefaultMessageNotifications } = require("discord.js");
 //DECLARE CLIENT ==> Includes: Intents.
