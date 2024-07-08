@@ -157,7 +157,7 @@ client.on("messageReactionAdd", async (msgreactadd) => {
 	//console.log(`messageReactionAdd Listener: reaction added: ${msgreactadd.emoji}`)
 });
 
-const SEND_CUSTOM_MESSAGE = false;
+const SEND_CUSTOM_MESSAGE = true;
 const CUSTOM_CHANNEL_ID = "1235756921521180722"; //Testing Channel ID: 1235756921521180722
 
 /*//ExampleEmbed
@@ -205,25 +205,28 @@ client.on("ready", async () => {
 > Proceed below! ↘️`
 	client.channels.cache.get(CUSTOM_CHANNEL_ID).send(message);
 });*/
-/*//Info New
+//Info New
 client.on("ready", async () => {
-	const message =
-`# Welcome to Rumble! 
+	let message =
+		`# Welcome to Rumble! 
 ## What is Rumble?
 > Rumble is your go-to investment recommendations and insights platform. Designed to make professional investment advice ` +
-`accessible, Rumble delivers actionable expert insights, analysis & content directly to your pocket. Licensed by the Egyptian ` +
-`Financial Regulatory Authority (FRA), Rumble ensures that all advice is not only expert-driven but also regulated for your peace of mind. ☕
+		`accessible, Rumble delivers actionable expert insights, analysis & content directly to your pocket. Licensed by the Egyptian ` +
+		`Financial Regulatory Authority (FRA), Rumble ensures that all advice is not only expert-driven but also regulated for your peace of mind. ☕
 ## Rumble Community
 > The Rumble Community is where investors connect, share insights, and learn from experts. Engage with like-minded individuals ` +
-`and industry professionals, receive updates on the latest market trends & rumble releases. Join us and be part of a dynamic, supportive network that ` +
-`empowers you to make smarter investment decisions <a:fire_animated:1246811739677261824>🚀
+		`and industry professionals, receive updates on the latest market trends & rumble releases. Join us and be part of a dynamic, supportive network that ` +
+		`empowers you to make smarter investment decisions <a:fire_animated:1246811739677261824>🚀
 ## Assistance
 > If you need help with Discord and the Community, please mention our Discord staff using <@&1238175989264285707> ✋
 > If you would like support with using Rumble and want to ask question about Stocks and so forth, please use the <#1235771422563893298> channel 🤝
 ## Next Steps
 > This guide will walk you through the Rumble Community! Proceed below! ↘️`
 	client.channels.cache.get(CUSTOM_CHANNEL_ID).send(message);
-});*/
+	//message =
+	//	"## أهلاً بيك في رمبل"
+	//client.channels.cache.get(CUSTOM_CHANNEL_ID).send(message);
+});
 /*//Contact Us Old
 client.on("ready", async () => 
 	{
@@ -274,7 +277,7 @@ client.on("ready", async () =>
 			{ name: 'Rumble FAQ', value: '❓If you have a question about Rumble, check out our FAQs ' + 
 			'[here](https://thndrapp.notion.site/ec39a449b192472f99e7cbaf2bce8f46?v=ec72996c63f847c0ba6884004a0cf931)\n'},
 			{ name: 'Support Ticket', value: '💬 Need to get in touch?'
-			+ 'You can reach us at [support@therumble.app](https://mailto:support@therumble.app) ' +
+			+ ' You can reach us at [support@therumble.app](https://mailto:support@therumble.app) ' +
 			'or you can open a support ticket and chat directly with our team from <#1235771422563893298> !\n'},
 			{ name: '\u200b', value: '\u200b'}, // \u200b is a "zerio width space"
 			{ name: 'Socials', value: '<:facebook_icon:1247535729631035472> Facebook - [therumblemena](https://www.facebook.com/therumblemena)\n' + 
