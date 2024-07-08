@@ -138,7 +138,7 @@ client.on("interactionCreate", async (interaction) => {
 	}
 });
 
-const MESSAGE_LOGGING = false;
+const MESSAGE_LOGGING = true;
 
 client.on("messageCreate", async (msg) => {
 	if (MESSAGE_LOGGING === true) {
