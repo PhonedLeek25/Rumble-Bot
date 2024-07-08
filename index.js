@@ -273,7 +273,7 @@ client.on("ready", async () =>
 			client.channels.cache.get(CUSTOM_CHANNEL_ID).send({ embeds: [exampleEmbed] });
 
 	});*/
-//Contact Us New that they want.
+/*//Contact Us New that they want.
 client.on("ready", async () => {
 
 	if (!SEND_CUSTOM_MESSAGE) return;
@@ -327,13 +327,13 @@ client.on("ready", async () => {
 			//To add a blank field to the embed, you can use .addFields({ name: '\u200b', value: '\u200b' }).
 			//{ name: '\u200b', value: '\u200b'}, // \u200b is a "zerio width space"
 			{
-				name: 'الاسئلة المتكررة لدسكورد', value: '❓يمكنك رؤيات الأصلا المتكررة الخاصة بدسكورد [هنا](https://support.discord.com/hc/en-us) ' +
-					'\n❓لو جديد على دسكورد، تئدر انك تشوف الفيديو السريع دة عن إستخدم دسكورد' +
+				name: 'الاسئلة المتكررة لدسكورد', value: 'يمكنك رؤيات الأصلا المتكررة الخاصة بدسكورد [هنا](https://support.discord.com/hc/en-us) ❓' +
+					'\nلو جديد على دسكورد، تئدر انك تشوف الفيديو السريع دة عن إستخدم دسكورد ❓' + "\n" +
 					'[How Discord Works in 148,000 Miliseconds or Less](https://www.youtube.com/watch?v=TJ13BA3-NR4&pp=ygUTZGlzY29yZCBiYXNpYyB1c2FnZQ%3D%3D)'
 			},
 			{
-				name: 'Rumble FAQ', value: '❓لو عندك اسئلة عن رمبل، تئدر تشوف الاسئلة المتكررة بتاعتنا ' +
-					'[هنا](https://thndrapp.notion.site/ec39a449b192472f99e7cbaf2bce8f46?v=ec72996c63f847c0ba6884004a0cf931)\n'
+				name: 'Rumble FAQ', value: 'لو عندك اسئلة عن رمبل، تئدر تشوف الاسئلة المتكررة بتاعتنا ' +
+					'[هنا](https://thndrapp.notion.site/ec39a449b192472f99e7cbaf2bce8f46?v=ec72996c63f847c0ba6884004a0cf931) ❓\n'
 			},
 			{
 				name: 'فتح تسكرة مساعدة', value: '💬 محتاج التواصل معنى؟?'
@@ -352,7 +352,7 @@ client.on("ready", async () => {
 /*//House Rules
 client.on("ready", async () => {
 	const message =
-`## House Rules
+		`## House Rules
 ### 1.Be respectful
 This means no mean, rude, or harassing comments. Treat others the way you want to be treated.
 ### 2.No inappropriate language
