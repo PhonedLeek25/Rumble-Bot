@@ -349,7 +349,7 @@ client.on("ready", async () => {
 			})
 	client.channels.cache.get(CUSTOM_CHANNEL_ID).send({ embeds: [exampleEmbed] });
 });*/
-//House Rules
+/*//House Rules
 client.on("ready", async () => {
 	let message =
 		`## House Rules
@@ -379,7 +379,7 @@ Keep your names and profile picture appropriate.`
 .حافظ على أن يكون اسمك وصورتك الشخصية لائقة
 `
 	client.channels.cache.get(CUSTOM_CHANNEL_ID).send(message);
-});
+});*/
 /*//Discord FAQ DEPRECATED
 client.on("ready", async () => {
 	const message =
