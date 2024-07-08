@@ -158,7 +158,7 @@ client.on("messageReactionAdd", async (msgreactadd) => {
 });
 
 const SEND_CUSTOM_MESSAGE = true;
-const CUSTOM_CHANNEL_ID = "1235756921521180722"; //Testing Channel ID: 1235756921521180722
+const CUSTOM_CHANNEL_ID = "1244220591108788314"; //Testing Channel ID: 1235756921521180722
 
 /*//ExampleEmbed
 	client.on("ready", async () => 
@@ -205,7 +205,7 @@ client.on("ready", async () => {
 > Proceed below! ↘️`
 	client.channels.cache.get(CUSTOM_CHANNEL_ID).send(message);
 });*/
-//Info New
+/*//Info New
 client.on("ready", async () => {
 	let message =
 		`# Welcome to Rumble! 
@@ -223,10 +223,24 @@ client.on("ready", async () => {
 ## Next Steps
 > This guide will walk you through the Rumble Community! Proceed below! ↘️`
 	client.channels.cache.get(CUSTOM_CHANNEL_ID).send(message);
-	//message =
-	//	"## أهلاً بيك في رمبل"
-	//client.channels.cache.get(CUSTOM_CHANNEL_ID).send(message);
-});
+
+	client.channels.cache.get(CUSTOM_CHANNEL_ID).send("\u200b");
+
+	message =
+		"\n" + `#                !أهلاً بيك في رمبل
+## إيه هو رامبل؟
+>   رامبل مهمتها تسهيل الوصول لنصائح  الخبراء الاستثمار ، خبراء رامبل بيقدموا نصائح وتحليلات قابلة للتنفيذ ومحتوى استثماري ليك مباشرة. رامبل مرخصة من الهيئة العامة للرقابة المالية، وده بيضمن أن النصائح  مش بس جاية من أقوى الخبراء لأ كمان مرخصة عشان راحة بالكرامبل هي منصة بتوفرلك الرؤى والتوصيات الاستثمارية
+## مجتمع رامبل
+> مجتمع رامبل هو المكان اللي بيتواصل فيه المستثمرين ويتناقشوا في الأفكار ويتعلموا من الخبراء. تفاعل مع المستثمرين اللي بيشاركوك نفس الافكار والمحترفين في المجال ده
+> <a:fire_animated:1246811739677261824>🚀 وهيجيلك  تحديثات عن أحدث اتجاهات السوق واصدارات رامبل. انضم لنا وكون جزء من شبكة ديناميكية وداعمة تمكنك من اتخاذ قرارات استثمارية مبنية على معلومات
+## مساعدة
+> لو محتاج أي مساعدة في مجتمع دسكورد، اعمل منشنل للتيم بتاعنا بإستخدم <@&1238175989264285707> ✋
+> لو محتاج مساعدة في إستخدام رمبل و محتاج مساعدة في البورصة، انشئ تذكرة جديدة من: <#1235771422563893298> 🤝
+## الخطوات الاتية
+> الدليل دة هيعرفك أكتر و يخدك عبر المجتمع بتاع رمبل، يلى بينا! ↘️`
+	client.channels.cache.get(CUSTOM_CHANNEL_ID).send(message);
+
+});*/
 /*//Contact Us Old
 client.on("ready", async () => 
 	{
@@ -259,44 +273,82 @@ client.on("ready", async () =>
 			client.channels.cache.get(CUSTOM_CHANNEL_ID).send({ embeds: [exampleEmbed] });
 
 	});*/
-/*//Contact Us New that they want.
-client.on("ready", async () => 
-	{
-		if(!SEND_CUSTOM_MESSAGE) return;
-		const exampleEmbed = new EmbedBuilder()
-		.setAuthor({ name: 'Rumble', iconURL: 'https://i.imgur.com/29Q6QJd.jpg'}) //grab imagur link then put an i. before "imagur" and a .fileextention
-		.setColor("color.GREEN") //accepts integer, HEX, RGB Array,string: https://discord.js.org/docs/packages/discord.js/14.15.2/ColorResolvable:TypeAlias
+//Contact Us New that they want.
+client.on("ready", async () => {
+
+	if (!SEND_CUSTOM_MESSAGE) return;
+	let exampleEmbed = new EmbedBuilder()
+		.setAuthor({ name: 'Rumble', iconURL: 'https://i.imgur.com/29Q6QJd.jpg' }) //grab imagur link then put an i. before "imagur" and a .fileextention
+		.setColor(0x57f287) //accepts integer, HEX, RGB Array,string: https://discord.js.org/docs/packages/discord.js/14.15.2/ColorResolvable:TypeAlias
 		.setTitle('Need help or have any questions?')
 		.setDescription('If you have any questions, need support, or want to contact us, here\'s everything you need!')
 		.addFields(
 			//To add a blank field to the embed, you can use .addFields({ name: '\u200b', value: '\u200b' }).
 			//{ name: '\u200b', value: '\u200b'}, // \u200b is a "zerio width space"
-			{ name: 'Discord FAQ', value: '❓You can check out frequently asked questions about discord [here](https://support.discord.com/hc/en-us) ' +
-				'\n❓If you\'re new to discord, here is a quick video about what Discord is about and how to use it: ' +
-				'[How Discord Works in 148,000 Miliseconds or Less](https://www.youtube.com/watch?v=TJ13BA3-NR4&pp=ygUTZGlzY29yZCBiYXNpYyB1c2FnZQ%3D%3D)'},
-			{ name: 'Rumble FAQ', value: '❓If you have a question about Rumble, check out our FAQs ' + 
-			'[here](https://thndrapp.notion.site/ec39a449b192472f99e7cbaf2bce8f46?v=ec72996c63f847c0ba6884004a0cf931)\n'},
-			{ name: 'Support Ticket', value: '💬 Need to get in touch?'
-			+ ' You can reach us at [support@therumble.app](https://mailto:support@therumble.app) ' +
-			'or you can open a support ticket and chat directly with our team from <#1235771422563893298> !\n'},
-			{ name: '\u200b', value: '\u200b'}, // \u200b is a "zerio width space"
-			{ name: 'Socials', value: '<:facebook_icon:1247535729631035472> Facebook - [therumblemena](https://www.facebook.com/therumblemena)\n' + 
-				'<:whatsapp_icon:1247535727001079858> Whatsapp - [Rumble | رامبل](https://www.whatsapp.com/channel/0029Va9nn8e1NCrcKRwvmf02)\n' + 
-				'<:instagram_icon:1247536363864064041> Instagram - [@rumblemena](https://www.instagram.com/rumblemena/)\n' +
-				'<:youtube_icon:1247563994789843080> YouTube - [Rumble](https://www.youtube.com/@RumbleMENA)'
-			 }
+			{
+				name: 'Discord FAQ', value: '❓You can check out frequently asked questions about discord [here](https://support.discord.com/hc/en-us) ' +
+					'\n❓If you\'re new to discord, here is a quick video about what Discord is about and how to use it: ' +
+					'[How Discord Works in 148,00 Miliseconds or Less](https://www.youtube.com/watch?v=TJ13BA3-NR4&pp=ygUTZGlzY29yZCBiYXNpYyB1c2FnZQ%3D%3D)'
+			},
+			{
+				name: 'Rumble FAQ', value: '❓If you have a question about Rumble, check out our FAQs ' +
+					'[here](https://thndrapp.notion.site/ec39a449b192472f99e7cbaf2bce8f46?v=ec72996c63f847c0ba6884004a0cf931)\n'
+			},
+			{
+				name: 'Support Ticket', value: '💬 Need to get in touch?'
+					+ ' You can reach us at [support@therumble.app](https://mailto:support@therumble.app) ' +
+					'or you can open a support ticket and chat directly with our team from <#1235771422563893298> !\n'
+			},
+			{ name: '\u200b', value: '\u200b' }, // \u200b is a "zerio width space"
+			{
+				name: 'Socials', value: '<:facebook_icon:1247535729631035472> Facebook - [therumblemena](https://www.facebook.com/therumblemena)\n' +
+					'<:whatsapp_icon:1247535727001079858> Whatsapp - [Rumble | رامبل](https://www.whatsapp.com/channel/0029Va9nn8e1NCrcKRwvmf02)\n' +
+					'<:instagram_icon:1247536363864064041> Instagram - [@rumblemena](https://www.instagram.com/rumblemena/)\n' +
+					'<:youtube_icon:1247563994789843080> YouTube - [Rumble](https://www.youtube.com/@RumbleMENA)'
+			}
 		)
-		//.addFields({ name: 'Facebook', value: '[therumblemena](https://www.facebook.com/therumblemena)', inline: true })
-		//.addFields({ name: 'Whatsapp', value: '[Rumble | رامبل](https://www.whatsapp.com/channel/0029Va9nn8e1NCrcKRwvmf02)', inline: true })
-		//.addFields({ name: 'Instagram', value: '[@rumblemena](https://www.instagram.com/rumblemena/)', inline: true })
-		//.addFields({ name: 'YouTube', value: '[Rumble](https://www.youtube.com/@RumbleMENA)', inline: true })
-		//.addFields({ name: 'Facebook', value: '[Thndr Community ⚡ مجتمع ثاندر](https://www.facebook.com/groups/1925493331072542)', inline: true })
-		//.addFields({ name: 'Whatsapp', value: '--', inline: true })
-		//.addFields({ name: 'Instagram', value: '--', inline: true })
-		//.setTimestamp()
-			client.channels.cache.get(CUSTOM_CHANNEL_ID).send({ embeds: [exampleEmbed] });
+	//.addFields({ name: 'Facebook', value: '[therumblemena](https://www.facebook.com/therumblemena)', inline: true })
+	//.addFields({ name: 'Whatsapp', value: '[Rumble | رامبل](https://www.whatsapp.com/channel/0029Va9nn8e1NCrcKRwvmf02)', inline: true })
+	//.addFields({ name: 'Instagram', value: '[@rumblemena](https://www.instagram.com/rumblemena/)', inline: true })
+	//.addFields({ name: 'YouTube', value: '[Rumble](https://www.youtube.com/@RumbleMENA)', inline: true })
+	//.addFields({ name: 'Facebook', value: '[Thndr Community ⚡ مجتمع ثاندر](https://www.facebook.com/groups/1925493331072542)', inline: true })
+	//.addFields({ name: 'Whatsapp', value: '--', inline: true })
+	//.addFields({ name: 'Instagram', value: '--', inline: true })
+	//.setTimestamp()
+	client.channels.cache.get(CUSTOM_CHANNEL_ID).send({ embeds: [exampleEmbed] });
 
-	});*/
+
+	exampleEmbed = new EmbedBuilder()
+		.setAuthor({ name: 'Rumble', iconURL: 'https://i.imgur.com/29Q6QJd.jpg' }) //grab imagur link then put an i. before "imagur" and a .fileextention
+		.setColor(0x57f287) //accepts integer, HEX, RGB Array,string: https://discord.js.org/docs/packages/discord.js/14.15.2/ColorResolvable:TypeAlias
+		.setTitle('عندك اسئلة أو محتاج مساعدة؟')
+		.setDescription('لو عندك اسئلة أو محتاج مساعدة، تئدر تلا هنا كل وسائل التواصل معنا')
+		.addFields(
+			//To add a blank field to the embed, you can use .addFields({ name: '\u200b', value: '\u200b' }).
+			//{ name: '\u200b', value: '\u200b'}, // \u200b is a "zerio width space"
+			{
+				name: 'الاسئلة المتكررة لدسكورد', value: '❓يمكنك رؤيات الأصلا المتكررة الخاصة بدسكورد [هنا](https://support.discord.com/hc/en-us) ' +
+					'\n❓لو جديد على دسكورد، تئدر انك تشوف الفيديو السريع دة عن إستخدم دسكورد' +
+					'[How Discord Works in 148,000 Miliseconds or Less](https://www.youtube.com/watch?v=TJ13BA3-NR4&pp=ygUTZGlzY29yZCBiYXNpYyB1c2FnZQ%3D%3D)'
+			},
+			{
+				name: 'Rumble FAQ', value: '❓لو عندك اسئلة عن رمبل، تئدر تشوف الاسئلة المتكررة بتاعتنا ' +
+					'[هنا](https://thndrapp.notion.site/ec39a449b192472f99e7cbaf2bce8f46?v=ec72996c63f847c0ba6884004a0cf931)\n'
+			},
+			{
+				name: 'فتح تسكرة مساعدة', value: '💬 محتاج التواصل معنى؟?'
+					+ ' تئدر التواصل معنا من [support@therumble.app](https://mailto:support@therumble.app) ' +
+					'أو التكلم مع فريقنا المتخصص من خلال <#1235771422563893298> !\n'
+			},
+			{ name: '\u200b', value: '\u200b' }, // \u200b is a "zerio width space"
+			{
+				name: 'Socials', value: '<:facebook_icon:1247535729631035472> Facebook - [therumblemena](https://www.facebook.com/therumblemena)\n' +
+					'<:whatsapp_icon:1247535727001079858> Whatsapp - [Rumble | رامبل](https://www.whatsapp.com/channel/0029Va9nn8e1NCrcKRwvmf02)\n' +
+					'<:instagram_icon:1247536363864064041> Instagram - [@rumblemena](https://www.instagram.com/rumblemena/)\n' +
+					'<:youtube_icon:1247563994789843080> YouTube - [Rumble](https://www.youtube.com/@RumbleMENA)'
+			})
+	client.channels.cache.get(CUSTOM_CHANNEL_ID).send({ embeds: [exampleEmbed] });
+});
 /*//House Rules
 client.on("ready", async () => {
 	const message =
