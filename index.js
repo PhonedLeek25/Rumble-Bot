@@ -158,7 +158,7 @@ client.on("messageReactionAdd", async (msgreactadd) => {
 });
 
 const SEND_CUSTOM_MESSAGE = true;
-const CUSTOM_CHANNEL_ID = "1244220591108788314"; //Testing Channel ID: 1235756921521180722
+const CUSTOM_CHANNEL_ID = "1225049083669119019"; //Testing Channel ID: 1235756921521180722
 
 /*//ExampleEmbed
 	client.on("ready", async () => 
@@ -224,7 +224,7 @@ client.on("ready", async () => {
 > This guide will walk you through the Rumble Community! Proceed below! ↘️`
 	client.channels.cache.get(CUSTOM_CHANNEL_ID).send(message);
 
-	client.channels.cache.get(CUSTOM_CHANNEL_ID).send("\u200b");
+	client.channels.cache.get(CUSTOM_CHANNEL_ID).send("\u200b"); //zero-width space
 
 	message =
 		"\n" + `#                !أهلاً بيك في رمبل
@@ -348,24 +348,39 @@ client.on("ready", async () => {
 					'<:youtube_icon:1247563994789843080> YouTube - [Rumble](https://www.youtube.com/@RumbleMENA)'
 			})
 	client.channels.cache.get(CUSTOM_CHANNEL_ID).send({ embeds: [exampleEmbed] });
-});
-/*//House Rules
+});*/
+//House Rules
 client.on("ready", async () => {
-	const message =
+	let message =
 		`## House Rules
-### 1.Be respectful
+### 1. Be respectful
 This means no mean, rude, or harassing comments. Treat others the way you want to be treated.
-### 2.No inappropriate language
+### 2. No inappropriate language
 Keep use of profanity to a reasonable minimum. Any derogatory language towards any user is prohibited. You can swear in casual channels only, while the other channels should be kept free of any profane language.
-### 3.No spamming
-Do not send a lot of small messages right after each other. These disrupt the chat and make it hard to scroll through the server. Please keep your messages at least 
-### 4.No advertisements
-Don’t send invasive advertising, whether it be for other communities or streams. You can post your content in the media channel if it’s relevant and provides actual value for the community.
-## 5.No offensive names and profile pictures
+### 3. No spamming
+Do not send a lot of small messages right after each other. These disrupt the chat and make it hard to scroll through the server. 
+### 4. No advertisements
+Don’t send invasive advertising, whether it be for other communities or streams. You can post your content if it’s relevant and provides actual value for the community.
+### 5. No offensive names and profile pictures
 Keep your names and profile picture appropriate.`
 	client.channels.cache.get(CUSTOM_CHANNEL_ID).send(message);
-});*/
-/*//Discord FAQ
+	client.channels.cache.get(CUSTOM_CHANNEL_ID).send("\u200b"); //zero-width space
+	message =
+		`## القواعد
+### التعامل بإحترام .1
+.هذا يعني ممنوع التعليقات السيئة أو فظة، معاملة الآخرين بالطريقة التي تريد أن يعاملوك بها
+### 2. ممنوع اللغة الغير لائقة
+.لا يسمح بالألفاظ البذيئة أو الخادشة للحياء
+### 3. لا ترسل عدد مفرط من الرسائل
+.لا ترسل الكثير من الرسائل الصغيرة مباشرة بعد بعضها البعض. هذه يزعج الآخرين ويجعل من الصعب تسفخ الرسائل الأخرى
+### 4. ممنوع الإعلان
+.لا ترسل إعلانات غازية، سواء كان ذلك لمجتمعات أو مواقع أخرى. يمكنك نشر المحتوى الخاص بك إذا كان متعلق بالحوار و يوفر قيمة فعلية للمجتمع.
+### 5. ممنوع استخدام الأسماء والصور الشخصية السيئة
+.حافظ على أن يكون اسمك وصورتك الشخصية لائقة
+`
+	client.channels.cache.get(CUSTOM_CHANNEL_ID).send(message);
+});
+/*//Discord FAQ DEPRECATED
 client.on("ready", async () => {
 	const message =
 "# Frequently Asked Questions\n" + 
