@@ -1,5 +1,4 @@
 require("dotenv").config();
-const DISCORD_TOKEN = process.env;
 const fs = require("node:fs"); //NODE.JS's Native File System (choose directory/file navigation)
 const path = require("node:path"); //Node.js's Native Pathing Utility Module. helps construct paths to files and directories & automatically detects OS.
 const { UpvoteContainer, OnNewMessage } = require("./commands/upvoting/UpvoteContainer.js"); //Fetch UpvoteContainer
