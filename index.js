@@ -14,7 +14,8 @@ const client = new Client({
 		GatewayIntentBits.DirectMessages,
 		GatewayIntentBits.MessageContent,
 		GatewayIntentBits.GuildMessageReactions,
-		GatewayIntentBits.GuildMembers
+		GatewayIntentBits.GuildMembers,
+		GatewayIntentBits.GuildScheduledEvents
 	],
 });
 
@@ -103,20 +104,7 @@ client.on(Events.InteractionCreate, async interaction => {
 });
 */
 
-//Say Fuck You in DMs when you send a message
-//client.on("messageCreate", async (message) => {
-//    console.log(message)
-//    if (!message?.author.bot)
-//        {
-//            message.author.send("fuck you");
-//        }
-//})
-
-//moved to ./events/ready.js
-//client.once(Events.ClientReady, readyClient => {
-//	console.log(`Ready! Logged in as ${readyClient.user.tag}`);
-//});
-
+//-------------------------------------------------------READY-------------------------------------------------------//
 client.on("ready", async () => {
 	console.log(color.GREEN + "Logged in!" + color.RESET); //Logged In! console message
 	client.user.setStatus(PresenceUpdateStatus.Online); //Status Online
@@ -130,15 +118,21 @@ client.on("ready", async () => {
 	await client.channels.cache.get("1235756921521180722").send("Ready to Rumble!");
 });
 
-client.on("interactionCreate", async (interaction) => {
-	if (interaction.isChatInputCommand()) {
-		const command = interaction.client.commands.get(interaction.commandName);
-		return;
-	}
-});
+/* //moved to ./events/ready.js
+client.once(Events.ClientReady, readyClient => {
+	console.log(`Ready! Logged in as ${readyClient.user.tag}`);
+});*/
+
+/* Say Fuck You in DMs when you send a message
+client.on("messageCreate", async (message) => {
+    console.log(message)
+    if (!message?.author.bot)
+        {
+            message.author.send("fuck you");
+        }
+}) */
 
 const MESSAGE_LOGGING = true;
-
 client.on("messageCreate", async (msg) => {
 	if (MESSAGE_LOGGING === true) {
 		console.log(`message detected by ${color.YELLOW}${msg.author.tag.toString()}${color.RESET}` +
@@ -151,9 +145,52 @@ client.on("messageCreate", async (msg) => {
 		OnNewMessage(msg, client);
 	}
 });
+
+client.on("interactionCreate", async (interaction) => {
+	if (interaction.isChatInputCommand()) {
+		const command = interaction.client.commands.get(interaction.commandName);
+		return;
+	}
+});
+
 client.on("messageReactionAdd", async (msgreactadd) => {
 	//THIS ACTUALLY WORKS! JUST NEEDED THE INTENT
 	//console.log(`messageReactionAdd Listener: reaction added: ${msgreactadd.emoji}`)
+});
+
+client.on("guildScheduledEventCreate", async (myevent) =>{
+	//Automated Notifications:
+	const Announcmenet_Channel = "1235756921521180722"; //ANNOUNCMENTS: 1235757310631088201 //COMMANDS AND TESTING: 1235756921521180722
+	const fundemental_roleid = "1238086366487777320";
+	const technical_roleid = "1238086577616457770";
+	const sergio_roleid = "1240251548894892112";
+	const abdelkhalek_roleid = "1240251294632120392";
+	const alfy_roleid = "1240251434902093834";
+	const shams_roleid = "1240251600522579998";
+	const hefnawi_roleid = "1240251495996461149";
+	const eventname = myevent.name;
+	if (eventname.includes("Sergio") || eventname.includes("sergio")){
+
+	}
+	else if (eventname.includes("Abdelkhalek") || eventname.includes("Abdel Khalek") || eventname.includes("Abdel khalek") || eventname.includes("abdelkhalek")){
+
+	}
+	else if (eventname.includes("Alfy") || eventname.includes("alfy")){
+
+	}
+	else if (eventname.includes("Shams") || eventname.includes("shams")){
+
+	}
+	else if (eventname.includes("Hefnawi") || eventname.includes("hefnawi")){
+
+	}
+	else{
+		const error_channel = "1235775685155360869";
+		const error_msg = "<@&1235756435636486164>An event ("+eventname+")was created but I was not able to figure out which expert its for!";
+		await client.channels.cache.get(error_channel).send(error_msg);
+	}
+	console.log("start: " + myevent.scheduledStartAt);
+	console.log(typeof(myevent.scheduledStartAt));
 });
 
 const SEND_CUSTOM_MESSAGE = true;
