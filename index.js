@@ -161,36 +161,48 @@ client.on("messageReactionAdd", async (msgreactadd) => {
 client.on("guildScheduledEventCreate", async (myevent) =>{
 	//Automated Notifications:
 	const Announcmenet_Channel = "1235756921521180722"; //ANNOUNCMENTS: 1235757310631088201 //COMMANDS AND TESTING: 1235756921521180722
+	/* //Migrated to public_containers/RolesID.js
 	const fundemental_roleid = "1238086366487777320";
 	const technical_roleid = "1238086577616457770";
 	const sergio_roleid = "1240251548894892112";
 	const abdelkhalek_roleid = "1240251294632120392";
 	const alfy_roleid = "1240251434902093834";
 	const shams_roleid = "1240251600522579998";
-	const hefnawi_roleid = "1240251495996461149";
+	const hefnawi_roleid = "1240251495996461149";*/
 	const eventname = myevent.name;
+	let tripped = false; let error = false;
 	if (eventname.includes("Sergio") || eventname.includes("sergio")){
-
+		if (tripped){ error = true; }
+		else { tripped = true; }
 	}
-	else if (eventname.includes("Abdelkhalek") || eventname.includes("Abdel Khalek") || eventname.includes("Abdel khalek") || eventname.includes("abdelkhalek")){
-
+	if (eventname.includes("Abdelkhalek") || eventname.includes("Abdel Khalek") || eventname.includes("Abdel khalek") || eventname.includes("abdelkhalek")){
+		if (tripped){ error = true; }
+		else { tripped = true; }
 	}
-	else if (eventname.includes("Alfy") || eventname.includes("alfy")){
-
+	if (eventname.includes("Alfy") || eventname.includes("alfy")){
+		if (tripped){ error = true; }
+		else { tripped = true; }
 	}
-	else if (eventname.includes("Shams") || eventname.includes("shams")){
-
+	if (eventname.includes("Shams") || eventname.includes("shams")){
+		if (tripped){ error = true; }
+		else { tripped = true; }
 	}
-	else if (eventname.includes("Hefnawi") || eventname.includes("hefnawi")){
-
+	if (eventname.includes("Hefnawi") || eventname.includes("hefnawi")){
+		if (tripped){ error = true; }
+		else { tripped = true; }
 	}
-	else{
+	if (tripped === false || error === true){
 		const error_channel = "1235775685155360869";
-		const error_msg = "<@&1235756435636486164>An event ("+eventname+")was created but I was not able to figure out which expert its for!";
+		const error_msg = "<@&1235756435636486164> An event ("+eventname+")was created but I was not able to figure out which expert its for!";
 		await client.channels.cache.get(error_channel).send(error_msg);
 	}
-	console.log("start: " + myevent.scheduledStartAt);
-	console.log(typeof(myevent.scheduledStartAt));
+	//GOOD
+	else{
+		
+	}
+	const start_date = myevent.scheduledStartAt
+	console.log("start: " + start_date);
+	console.log(typeof(start_date));
 });
 
 const SEND_CUSTOM_MESSAGE = true;
