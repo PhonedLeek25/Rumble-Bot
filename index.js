@@ -116,6 +116,10 @@ client.on("ready", async () => {
 	//await RefreshUsers(client);//Do it once.
 	//setInterval(RefreshUsers, 21600000); //6 hours (21,600,000 milliseconds) = 21600000
 	await client.channels.cache.get("1235756921521180722").send("Ready to Rumble!");
+
+	const mydate = new Date();
+	console.log("today: " + mydate);
+	console.log("TIME NOW " + "Day: " + mydate.getDay() + ", Hours: " + mydate.getHours() + ", Minutes: " + mydate.getMinutes + ", Seconds: " + mydate.getSeconds);
 });
 
 /* //moved to ./events/ready.js
@@ -125,11 +129,11 @@ client.once(Events.ClientReady, readyClient => {
 
 /* Say Fuck You in DMs when you send a message
 client.on("messageCreate", async (message) => {
-    console.log(message)
-    if (!message?.author.bot)
-        {
-            message.author.send("fuck you");
-        }
+	console.log(message)
+	if (!message?.author.bot)
+		{
+			message.author.send("fuck you");
+		}
 }) */
 
 const MESSAGE_LOGGING = true;
@@ -158,7 +162,7 @@ client.on("messageReactionAdd", async (msgreactadd) => {
 	//console.log(`messageReactionAdd Listener: reaction added: ${msgreactadd.emoji}`)
 });
 
-client.on("guildScheduledEventCreate", async (myevent) =>{
+client.on("guildScheduledEventCreate", async (myevent) => {
 	//Automated Notifications:
 	const Announcmenet_Channel = "1235756921521180722"; //ANNOUNCMENTS: 1235757310631088201 //COMMANDS AND TESTING: 1235756921521180722
 	/* //Migrated to public_containers/RolesID.js
@@ -171,38 +175,42 @@ client.on("guildScheduledEventCreate", async (myevent) =>{
 	const hefnawi_roleid = "1240251495996461149";*/
 	const eventname = myevent.name;
 	let tripped = false; let error = false;
-	if (eventname.includes("Sergio") || eventname.includes("sergio")){
-		if (tripped){ error = true; }
+	if (eventname.includes("Sergio") || eventname.includes("sergio")) {
+		if (tripped) { error = true; }
 		else { tripped = true; }
 	}
-	if (eventname.includes("Abdelkhalek") || eventname.includes("Abdel Khalek") || eventname.includes("Abdel khalek") || eventname.includes("abdelkhalek")){
-		if (tripped){ error = true; }
+	if (eventname.includes("Abdelkhalek") || eventname.includes("Abdel Khalek") || eventname.includes("Abdel khalek") || eventname.includes("abdelkhalek")) {
+		if (tripped) { error = true; }
 		else { tripped = true; }
 	}
-	if (eventname.includes("Alfy") || eventname.includes("alfy")){
-		if (tripped){ error = true; }
+	if (eventname.includes("Alfy") || eventname.includes("alfy")) {
+		if (tripped) { error = true; }
 		else { tripped = true; }
 	}
-	if (eventname.includes("Shams") || eventname.includes("shams")){
-		if (tripped){ error = true; }
+	if (eventname.includes("Shams") || eventname.includes("shams")) {
+		if (tripped) { error = true; }
 		else { tripped = true; }
 	}
-	if (eventname.includes("Hefnawi") || eventname.includes("hefnawi")){
-		if (tripped){ error = true; }
+	if (eventname.includes("Hefnawi") || eventname.includes("hefnawi")) {
+		if (tripped) { error = true; }
 		else { tripped = true; }
 	}
-	if (tripped === false || error === true){
+	if (tripped === false || error === true) {
 		const error_channel = "1235775685155360869";
-		const error_msg = "<@&1235756435636486164> An event ("+eventname+")was created but I was not able to figure out which expert its for!";
-		await client.channels.cache.get(error_channel).send(error_msg);
+		const error_msg = "<@&1235756435636486164> An event (" + eventname + ") was created but I was not able to figure out which expert its for!";
+		//await client.channels.cache.get(error_channel).send(error_msg);
 	}
 	//GOOD
-	else{
-		
+	else {
+
 	}
-	const start_date = myevent.scheduledStartAt
-	console.log("start: " + start_date);
-	console.log(typeof(start_date));
+	const start_date = myevent.scheduledStartAt;
+	console.log("start: " + start_date + " --> " + typeof (start_date));
+	console.log("Day: " + start_date.getDay() + ", Hours: " + start_date.getHours() + ", Minutes: " + start_date.getMinutes() +
+		", Seconds: " + start_date.getSeconds());
+	const mydate = new Date();
+	console.log("today: " + mydate);
+	console.log("TIME NOW " + "Day: " + mydate.getDay() + ", Hours: " + mydate.getHours() + ", Minutes: " + mydate.getMinutes + ", Seconds: " + mydate.getSeconds);
 });
 
 const SEND_CUSTOM_MESSAGE = true;
