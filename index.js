@@ -3,9 +3,11 @@ const fs = require("node:fs"); //NODE.JS's Native File System (choose directory/
 const path = require("node:path"); //Node.js's Native Pathing Utility Module. helps construct paths to files and directories & automatically detects OS.
 const { UpvoteContainer, OnNewMessage } = require("./commands/upvoting/UpvoteContainer.js"); //Fetch UpvoteContainer
 const { color } = require("./public_containers/color.js");
-
+const { RoleID } = require("./public_containers/RolesID.js");
 //import { Client, GatewayIntentBits, ButtonBuilder, ButtonStyle, TextInputBuilder, TextInputStyle, Collection} from 'discord.js';
 const { Client, GatewayIntentBits, Collection, Events, ActivityType, PresenceUpdateStatus, EmbedBuilder, managerToFetchingStrategyOptions, GuildDefaultMessageNotifications } = require("discord.js");
+const exp = require("node:constants");
+const { isAsyncFunction } = require("node:util/types");
 //DECLARE CLIENT ==> Includes: Intents.
 const client = new Client({
 	intents: [
@@ -116,6 +118,9 @@ client.on("ready", async () => {
 	//await RefreshUsers(client);//Do it once.
 	//setInterval(RefreshUsers, 21600000); //6 hours (21,600,000 milliseconds) = 21600000
 	await client.channels.cache.get("1235756921521180722").send("Ready to Rumble!");
+	const now_date = Date.now();
+	console.log(now_date + " --> " + typeof (now_date));
+	await client.channels.cache.get("1235756921521180722").send(`happening on <t:${now_date}> (<t:${now_date}:R>)`);
 
 	//const mydate = new Date();
 	//console.log("today: " + mydate);
@@ -162,47 +167,52 @@ client.on("messageReactionAdd", async (msgreactadd) => {
 	//console.log(`messageReactionAdd Listener: reaction added: ${msgreactadd.emoji}`)
 });
 
-
-async function startCountdown(minutes) {
-	console.log("A countdown with " + minutes + " minutes has started.");
+async function eventPlanner(sched_date, msg) {
 	const wait = require('node:timers/promises').setTimeout; //to be able to wait.
-	await wait(4000);
-	console.log("i fired");
+	const announcmenet_channel = "1235756921521180722"; //ANNOUNCMENTS: 1235757310631088201 //COMMANDS AND TESTING: 1235756921521180722
+	const now_date = new Date();
+	//const diff_seconds = -1 * now_date.getSeconds;
+	//const diff_minutes = sched_date.getMinutes() - now_date.getMinutes();
+	//const diff_hours = sched_date.getHours() - now_date.getHours();
+	//const diff_days = sched_date.getDay - now_date.getDay();
+	const msdiff = sched_date.getTime() - now_date.getTime();//milisecond difference
+	//Notify 24hrs in advance
+	if (msdiff > 86400000) { //24 Hours = 86,400,000 Milliseconds
+		await wait(msdiff - 86400000);
+		await client.channels.cache.get(announcmenet_channel).send(msg + `happening on <t:${sched_date.getTime()}> (<t:${sched_date.getTime()}:R>)`);
+	}
 }
 
 client.on("guildScheduledEventCreate", async (myevent) => {
 	//Automated Notifications:
-	const Announcmenet_Channel = "1235756921521180722"; //ANNOUNCMENTS: 1235757310631088201 //COMMANDS AND TESTING: 1235756921521180722
-	/* //Migrated to public_containers/RolesID.js
-	const fundemental_roleid = "1238086366487777320";
-	const technical_roleid = "1238086577616457770";
-	const sergio_roleid = "1240251548894892112";
-	const abdelkhalek_roleid = "1240251294632120392";
-	const alfy_roleid = "1240251434902093834";
-	const shams_roleid = "1240251600522579998";
-	const hefnawi_roleid = "1240251495996461149";*/
 	const eventname = myevent.name;
-	let tripped = false; let error = false;
+	let tripped = false; let error = false; let msg;
 	if (eventname.includes("Sergio") || eventname.includes("sergio")) {
 		if (tripped) { error = true; }
 		else { tripped = true; }
+		msg = "Live session with <@&" + RoleID.sergio + "> ";
 	}
 	if (eventname.includes("Abdelkhalek") || eventname.includes("Abdel Khalek") || eventname.includes("Abdel khalek") || eventname.includes("abdelkhalek")) {
 		if (tripped) { error = true; }
 		else { tripped = true; }
+		msg = "Live session with <@&" + RoleID.abdelkhalek + "> ";
 	}
 	if (eventname.includes("Alfy") || eventname.includes("alfy")) {
 		if (tripped) { error = true; }
 		else { tripped = true; }
+		msg = "Live session with <@&" + RoleID.alfy + "> ";
 	}
 	if (eventname.includes("Shams") || eventname.includes("shams")) {
 		if (tripped) { error = true; }
 		else { tripped = true; }
+		msg = "Live session with <@&" + RoleID.shams + "> ";
 	}
 	if (eventname.includes("Hefnawi") || eventname.includes("hefnawi")) {
 		if (tripped) { error = true; }
 		else { tripped = true; }
+		msg = "Live session with <@&" + RoleID.hefnawi + "> ";
 	}
+	//BAD
 	if (tripped === false || error === true) {
 		const error_channel = "1235775685155360869";
 		const error_msg = "<@&1235756435636486164> An event (" + eventname + ") was created but I was not able to figure out which expert its for!";
@@ -210,12 +220,19 @@ client.on("guildScheduledEventCreate", async (myevent) => {
 	}
 	//GOOD
 	else {
-		const waitTimeMinutes = 0;
+		eventPlanner(myevent.scheduledStartAt, msg);
 	}
+	//PC output
 	//start: Sat Jul 20 2024 16:00:00 GMT+0300 (Eastern European Summer Time) --> object
 	//Month: 6, Day: 6, Hours: 16, Minutes: 0, Seconds: 0
 	//today: Fri Jul 19 2024 14:56:09 GMT+0300 (Eastern European Summer Time)
 	//Month: 6, Day: 5, Hours: 14, Minutes: 56, Seconds: 9
+	//VM Output
+	//start: Sun Jul 21 2024 12:00:00 GMT+0000 (Coordinated Universal Time) --> object
+	//Month: 6, Day: 0, Hours: 12, Minutes: 0, Seconds: 0
+	//today: Sun Jul 21 2024 10:56:51 GMT+0000 (Coordinated Universal Time)
+	//Month: 6, Day: 0, Hours: 10, Minutes: 56, Seconds: 51
+
 	const start_date = myevent.scheduledStartAt;
 	console.log("start: " + start_date + " --> " + typeof (start_date));
 	console.log("Month: " + start_date.getMonth() + ", Day: " + start_date.getDay() + ", Hours: " + start_date.getHours() + ", Minutes: " + start_date.getMinutes() +
