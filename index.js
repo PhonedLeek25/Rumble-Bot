@@ -117,9 +117,9 @@ client.on("ready", async () => {
 	//setInterval(RefreshUsers, 21600000); //6 hours (21,600,000 milliseconds) = 21600000
 	await client.channels.cache.get("1235756921521180722").send("Ready to Rumble!");
 
-	const mydate = new Date();
-	console.log("today: " + mydate);
-	console.log("TIME NOW " + "Day: " + mydate.getDay() + ", Hours: " + mydate.getHours() + ", Minutes: " + mydate.getMinutes + ", Seconds: " + mydate.getSeconds);
+	//const mydate = new Date();
+	//console.log("today: " + mydate);
+	//console.log("TIME NOW " + "Day: " + mydate.getDay() + ", Hours: " + mydate.getHours() + ", Minutes: " + mydate.getMinutes() + ", Seconds: " + mydate.getSeconds());
 });
 
 /* //moved to ./events/ready.js
@@ -162,6 +162,14 @@ client.on("messageReactionAdd", async (msgreactadd) => {
 	//console.log(`messageReactionAdd Listener: reaction added: ${msgreactadd.emoji}`)
 });
 
+
+async function startCountdown(minutes) {
+	console.log("A countdown with " + minutes + " minutes has started.");
+	const wait = require('node:timers/promises').setTimeout; //to be able to wait.
+	await wait(4000);
+	console.log("i fired");
+}
+
 client.on("guildScheduledEventCreate", async (myevent) => {
 	//Automated Notifications:
 	const Announcmenet_Channel = "1235756921521180722"; //ANNOUNCMENTS: 1235757310631088201 //COMMANDS AND TESTING: 1235756921521180722
@@ -202,15 +210,21 @@ client.on("guildScheduledEventCreate", async (myevent) => {
 	}
 	//GOOD
 	else {
-
+		const waitTimeMinutes = 0;
 	}
+	//start: Sat Jul 20 2024 16:00:00 GMT+0300 (Eastern European Summer Time) --> object
+	//Month: 6, Day: 6, Hours: 16, Minutes: 0, Seconds: 0
+	//today: Fri Jul 19 2024 14:56:09 GMT+0300 (Eastern European Summer Time)
+	//Month: 6, Day: 5, Hours: 14, Minutes: 56, Seconds: 9
 	const start_date = myevent.scheduledStartAt;
 	console.log("start: " + start_date + " --> " + typeof (start_date));
-	console.log("Day: " + start_date.getDay() + ", Hours: " + start_date.getHours() + ", Minutes: " + start_date.getMinutes() +
+	console.log("Month: " + start_date.getMonth() + ", Day: " + start_date.getDay() + ", Hours: " + start_date.getHours() + ", Minutes: " + start_date.getMinutes() +
 		", Seconds: " + start_date.getSeconds());
 	const mydate = new Date();
 	console.log("today: " + mydate);
-	console.log("TIME NOW " + "Day: " + mydate.getDay() + ", Hours: " + mydate.getHours() + ", Minutes: " + mydate.getMinutes + ", Seconds: " + mydate.getSeconds);
+	console.log("Month: " + start_date.getMonth() + ", Day: " + mydate.getDay() + ", Hours: " + mydate.getHours() + ", Minutes: " + mydate.getMinutes() +
+		", Seconds: " + mydate.getSeconds());
+
 });
 
 const SEND_CUSTOM_MESSAGE = true;
