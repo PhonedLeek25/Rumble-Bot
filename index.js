@@ -118,9 +118,8 @@ client.on("ready", async () => {
 	//await RefreshUsers(client);//Do it once.
 	//setInterval(RefreshUsers, 21600000); //6 hours (21,600,000 milliseconds) = 21600000
 	await client.channels.cache.get("1235756921521180722").send("Ready to Rumble!");
-	const now_date = Date.now();
-	console.log(now_date + " --> " + typeof (now_date));
-	await client.channels.cache.get("1235756921521180722").send(`happening on <t:${now_date}> (<t:${now_date}:R>)`);
+	const now_date = new Date();
+	await client.channels.cache.get("1235756921521180722").send(`happening on <t:${Math.floor(now_date.getTime() / 1000)}> (<t:${Math.floor(now_date.getTime() / 1000)}:R>)`);
 
 	//const mydate = new Date();
 	//console.log("today: " + mydate);
@@ -175,11 +174,28 @@ async function eventPlanner(sched_date, msg) {
 	//const diff_minutes = sched_date.getMinutes() - now_date.getMinutes();
 	//const diff_hours = sched_date.getHours() - now_date.getHours();
 	//const diff_days = sched_date.getDay - now_date.getDay();
-	const msdiff = sched_date.getTime() - now_date.getTime();//milisecond difference
+	let msdiff = sched_date.getTime() - now_date.getTime();//milisecond difference
 	//Notify 24hrs in advance
-	if (msdiff > 86400000) { //24 Hours = 86,400,000 Milliseconds
-		await wait(msdiff - 86400000);
-		await client.channels.cache.get(announcmenet_channel).send(msg + `happening on <t:${sched_date.getTime()}> (<t:${sched_date.getTime()}:R>)`);
+	if (msdiff >= 86400000) { //24 Hours = 86,400,000 Milliseconds
+		await wait(msdiff - 86400000); //wait till 24hrs before the event
+		await client.channels.cache.get(announcmenet_channel).send(msg + //Discord uses UNIX_TIMESTAMP() seconds! not ms.
+			`happening on <t:${Math.floor(sched_date.getTime() / 1000)}> (<t:${Math.floor(sched_date.getTime() / 1000)}:R>)`);
+		msdiff -= 86400000;
+	}
+	else if (msdiff >= 43200000) { //12 Hours = 43,200,000 Milliseconds
+		await wait(msdiff - 43200000);  //wait till 12hrs before the event
+		await client.channels.cache.get(announcmenet_channel).send(msg + //Discord uses UNIX_TIMESTAMP() seconds! not ms.
+			`happening on <t:${Math.floor(sched_date.getTime() / 1000)}> (<t:${Math.floor(sched_date.getTime() / 1000)}:R>)`);
+		msdiff -= 43200000;
+	}
+
+	if (msdiff >= 3600000) { //1 Hour = 3,600,000 Milliseconds
+		await wait(msdiff - 43200000);  //wait till 12hrs before the event
+		await client.channels.cache.get(announcmenet_channel).send("Reminder! " + msg + //Discord uses UNIX_TIMESTAMP() seconds! not ms.
+			`starting in <t:${Math.floor(sched_date.getTime() / 1000)}:R>`);
+	}
+	else {
+		await client.channels.cache.get(1235756921521180722).send("<@261216694901538816> critical error, even in less than an hour.");
 	}
 }
 
