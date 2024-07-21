@@ -3,7 +3,7 @@ const fs = require("node:fs"); //NODE.JS's Native File System (choose directory/
 const path = require("node:path"); //Node.js's Native Pathing Utility Module. helps construct paths to files and directories & automatically detects OS.
 const { UpvoteContainer, OnNewMessage } = require("./commands/upvoting/UpvoteContainer.js"); //Fetch UpvoteContainer
 const { color } = require("./public_containers/color.js");
-const { RoleID } = require("./public_containers/RolesID.js");
+const { RoleID } = require("./public_containers/RoleID.js");
 //import { Client, GatewayIntentBits, ButtonBuilder, ButtonStyle, TextInputBuilder, TextInputStyle, Collection} from 'discord.js';
 const { Client, GatewayIntentBits, Collection, Events, ActivityType, PresenceUpdateStatus, EmbedBuilder, managerToFetchingStrategyOptions, GuildDefaultMessageNotifications } = require("discord.js");
 const exp = require("node:constants");
@@ -118,8 +118,8 @@ client.on("ready", async () => {
 	//await RefreshUsers(client);//Do it once.
 	//setInterval(RefreshUsers, 21600000); //6 hours (21,600,000 milliseconds) = 21600000
 	await client.channels.cache.get("1235756921521180722").send("Ready to Rumble!");
-	const now_date = new Date();
-	await client.channels.cache.get("1235756921521180722").send(`happening on <t:${Math.floor(now_date.getTime() / 1000)}> (<t:${Math.floor(now_date.getTime() / 1000)}:R>)`);
+	const now_date = Date.now();
+	await client.channels.cache.get("1235756921521180722").send(`Started <t:${Math.floor(now_date / 1000)}> (<t:${Math.floor(now_date / 1000)}:R>)`);
 
 	//const mydate = new Date();
 	//console.log("today: " + mydate);
@@ -166,38 +166,7 @@ client.on("messageReactionAdd", async (msgreactadd) => {
 	//console.log(`messageReactionAdd Listener: reaction added: ${msgreactadd.emoji}`)
 });
 
-async function eventPlanner(sched_date, msg) {
-	const wait = require('node:timers/promises').setTimeout; //to be able to wait.
-	const announcmenet_channel = "1235756921521180722"; //ANNOUNCMENTS: 1235757310631088201 //COMMANDS AND TESTING: 1235756921521180722
-	const now_date = new Date();
-	//const diff_seconds = -1 * now_date.getSeconds;
-	//const diff_minutes = sched_date.getMinutes() - now_date.getMinutes();
-	//const diff_hours = sched_date.getHours() - now_date.getHours();
-	//const diff_days = sched_date.getDay - now_date.getDay();
-	let msdiff = sched_date.getTime() - now_date.getTime();//milisecond difference
-	//Notify 24hrs in advance
-	if (msdiff >= 86400000) { //24 Hours = 86,400,000 Milliseconds
-		await wait(msdiff - 86400000); //wait till 24hrs before the event
-		await client.channels.cache.get(announcmenet_channel).send(msg + //Discord uses UNIX_TIMESTAMP() seconds! not ms.
-			`happening on <t:${Math.floor(sched_date.getTime() / 1000)}> (<t:${Math.floor(sched_date.getTime() / 1000)}:R>)`);
-		msdiff -= 86400000;
-	}
-	else if (msdiff >= 43200000) { //12 Hours = 43,200,000 Milliseconds
-		await wait(msdiff - 43200000);  //wait till 12hrs before the event
-		await client.channels.cache.get(announcmenet_channel).send(msg + //Discord uses UNIX_TIMESTAMP() seconds! not ms.
-			`happening on <t:${Math.floor(sched_date.getTime() / 1000)}> (<t:${Math.floor(sched_date.getTime() / 1000)}:R>)`);
-		msdiff -= 43200000;
-	}
 
-	if (msdiff >= 3600000) { //1 Hour = 3,600,000 Milliseconds
-		await wait(msdiff - 43200000);  //wait till 12hrs before the event
-		await client.channels.cache.get(announcmenet_channel).send("Reminder! " + msg + //Discord uses UNIX_TIMESTAMP() seconds! not ms.
-			`starting in <t:${Math.floor(sched_date.getTime() / 1000)}:R>`);
-	}
-	else {
-		await client.channels.cache.get(1235756921521180722).send("<@261216694901538816> critical error, even in less than an hour.");
-	}
-}
 
 client.on("guildScheduledEventCreate", async (myevent) => {
 	//Automated Notifications:
@@ -236,7 +205,8 @@ client.on("guildScheduledEventCreate", async (myevent) => {
 	}
 	//GOOD
 	else {
-		eventPlanner(myevent.scheduledStartAt, msg);
+		const { scheduledAnnounce } = require('./private_containers/scheduledAnnounce.js');
+		scheduledAnnounce(myevent.scheduledStartAt, msg);
 	}
 	//PC output
 	//start: Sat Jul 20 2024 16:00:00 GMT+0300 (Eastern European Summer Time) --> object
