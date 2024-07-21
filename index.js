@@ -201,8 +201,8 @@ client.on("guildScheduledEventCreate", async (myevent) => {
 	if (tripped === false || error === true) {
 		const error_channel = "1235775685155360869";
 		const error_msg = "<@&1235756435636486164> An event (" + eventname + ") was created but I was not able to figure out which expert its for!";
-		//await client.channels.cache.get(error_channel).send(error_msg);
-		await client.channels.cache.get(error_channel).send("omak fucked up");
+		await client.channels.cache.get(error_channel).send(error_msg);
+		//await client.channels.cache.get(error_channel).send("omak fucked up");
 	}
 	//GOOD
 	else {

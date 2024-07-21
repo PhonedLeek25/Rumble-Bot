@@ -1,7 +1,7 @@
 async function scheduledAnnounce(client, sched_date, msg) {
     console.log("scheduledAnnounce started");
     const wait = require('node:timers/promises').setTimeout; //to be able to wait.
-    const announcmenet_channel = "1235756921521180722"; //ANNOUNCMENTS: 1235757310631088201 //COMMANDS AND TESTING: 1235756921521180722
+    const announcmenet_channel = "1235757310631088201"; //ANNOUNCMENTS: 1235757310631088201 //COMMANDS AND TESTING: 1235756921521180722
     const now_date = new Date();
     let msdiff = sched_date.getTime() - now_date.getTime();//milisecond difference
     console.log("msdiff: " + msdiff);
@@ -31,7 +31,7 @@ async function scheduledAnnounce(client, sched_date, msg) {
             `starting in <t:${Math.floor(sched_date.getTime() / 1000)}:R>`);
     }
     else {
-        await client.channels.cache.get(1235756921521180722).send("<@261216694901538816> critical error, even in less than an hour.");
+        await client.channels.cache.get(1235756921521180722).send("<@261216694901538816> critical error, in if (msdiff >= 3600000)");
     }
 }
 
