@@ -13,4 +13,4 @@ const RoleID = {
 	shams: "1240251600522579998",
 	hefnawi: "1240251495996461149"
 }
-module.exports = { RoleID }
+module.exports = { RoleID };

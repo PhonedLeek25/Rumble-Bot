@@ -4,13 +4,12 @@ const path = require("node:path"); //Node.js's Native Pathing Utility Module. he
 const { UpvoteContainer, OnNewMessage } = require("./commands/upvoting/UpvoteContainer.js"); //Fetch UpvoteContainer
 const { color } = require("./public_containers/color.js");
 const { RoleID } = require("./public_containers/RoleID.js");
-//import { Client, GatewayIntentBits, ButtonBuilder, ButtonStyle, TextInputBuilder, TextInputStyle, Collection} from 'discord.js';
+const { channelID } = require("./public_containers/channelID.js");
 const { Client, GatewayIntentBits, Collection, Events, ActivityType, PresenceUpdateStatus, EmbedBuilder, managerToFetchingStrategyOptions,
 	GuildDefaultMessageNotifications } = require("discord.js");
-const exp = require("node:constants");
-const { isAsyncFunction } = require("node:util/types");
-//DECLARE CLIENT ==> Includes: Intents.
-const client = new Client({
+//const exp = require("node:constants");
+//const { isAsyncFunction } = require("node:util/types");
+const client = new Client({ //DECLARE CLIENT ==> Includes: Intents.
 	intents: [
 		GatewayIntentBits.Guilds,
 		GatewayIntentBits.GuildMessages,
@@ -201,7 +200,7 @@ client.on("guildScheduledEventCreate", async (myevent) => {
 	}
 	//BAD
 	if (tripped === false || error === true) {
-		const error_channel = "1235775685155360869";
+		const error_channel = channelID.commands_and_testing;
 		const error_msg = "<@&1235756435636486164> An event (" + eventname + ") was created but I was not able to figure out which expert its for!";
 		await client.channels.cache.get(error_channel).send(error_msg);
 		//await client.channels.cache.get(error_channel).send("omak fucked up");
