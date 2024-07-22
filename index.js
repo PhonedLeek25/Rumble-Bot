@@ -5,7 +5,8 @@ const { UpvoteContainer, OnNewMessage } = require("./commands/upvoting/UpvoteCon
 const { color } = require("./public_containers/color.js");
 const { RoleID } = require("./public_containers/RoleID.js");
 //import { Client, GatewayIntentBits, ButtonBuilder, ButtonStyle, TextInputBuilder, TextInputStyle, Collection} from 'discord.js';
-const { Client, GatewayIntentBits, Collection, Events, ActivityType, PresenceUpdateStatus, EmbedBuilder, managerToFetchingStrategyOptions, GuildDefaultMessageNotifications } = require("discord.js");
+const { Client, GatewayIntentBits, Collection, Events, ActivityType, PresenceUpdateStatus, EmbedBuilder, managerToFetchingStrategyOptions,
+	GuildDefaultMessageNotifications } = require("discord.js");
 const exp = require("node:constants");
 const { isAsyncFunction } = require("node:util/types");
 //DECLARE CLIENT ==> Includes: Intents.
@@ -123,7 +124,8 @@ client.on("ready", async () => {
 
 	//const mydate = new Date();
 	//console.log("today: " + mydate);
-	//console.log("TIME NOW " + "Day: " + mydate.getDay() + ", Hours: " + mydate.getHours() + ", Minutes: " + mydate.getMinutes() + ", Seconds: " + mydate.getSeconds());
+	//console.log("TIME NOW " + "Day: " + mydate.getDay() + ", Hours: " + mydate.getHours() + ", Minutes: " + mydate.getMinutes() + ", Seconds: " +
+	//mydate.getSeconds());
 });
 
 /* //moved to ./events/ready.js
@@ -223,13 +225,12 @@ client.on("guildScheduledEventCreate", async (myevent) => {
 
 	const start_date = myevent.scheduledStartAt;
 	console.log("start: " + start_date + " --> " + typeof (start_date));
-	console.log("Month: " + start_date.getMonth() + ", Day: " + start_date.getDay() + ", Hours: " + start_date.getHours() + ", Minutes: " + start_date.getMinutes() +
-		", Seconds: " + start_date.getSeconds());
+	console.log("Month: " + start_date.getMonth() + ", Day: " + start_date.getDay() + ", Hours: " + start_date.getHours() + ", Minutes: " +
+		start_date.getMinutes() + ", Seconds: " + start_date.getSeconds());
 	const mydate = new Date();
 	console.log("today: " + mydate);
-	console.log("Month: " + start_date.getMonth() + ", Day: " + mydate.getDay() + ", Hours: " + mydate.getHours() + ", Minutes: " + mydate.getMinutes() +
-		", Seconds: " + mydate.getSeconds());
-
+	console.log("Month: " + start_date.getMonth() + ", Day: " + mydate.getDay() + ", Hours: " + mydate.getHours() + ", Minutes: " +
+		mydate.getMinutes() + ", Seconds: " + mydate.getSeconds());
 });
 
 const SEND_CUSTOM_MESSAGE = true;
