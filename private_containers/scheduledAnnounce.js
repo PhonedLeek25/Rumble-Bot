@@ -1,3 +1,5 @@
+let current_events = [];
+
 async function scheduledAnnounce(client, sched_date, msg) {
     const { channelID } = require("../public_containers/channelID");
     console.log("scheduledAnnounce started");
@@ -35,4 +37,4 @@ async function scheduledAnnounce(client, sched_date, msg) {
     }
 }
 
-module.exports = { scheduledAnnounce }
+module.exports = { scheduledAnnounce, current_events }

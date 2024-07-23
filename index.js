@@ -120,11 +120,6 @@ client.on("ready", async () => {
 	await client.channels.cache.get("1235756921521180722").send("Ready to Rumble!");
 	const now_date = Date.now();
 	await client.channels.cache.get("1235756921521180722").send(`Started <t:${Math.floor(now_date / 1000)}> (<t:${Math.floor(now_date / 1000)}:R>)`);
-
-	//const mydate = new Date();
-	//console.log("today: " + mydate);
-	//console.log("TIME NOW " + "Day: " + mydate.getDay() + ", Hours: " + mydate.getHours() + ", Minutes: " + mydate.getMinutes() + ", Seconds: " +
-	//mydate.getSeconds());
 });
 
 /* //moved to ./events/ready.js
@@ -167,9 +162,22 @@ client.on("messageReactionAdd", async (msgreactadd) => {
 	//console.log(`messageReactionAdd Listener: reaction added: ${msgreactadd.emoji}`)
 });
 
-
-
+const { scheduledAnnounce, current_events } = require('./private_containers/scheduledAnnounce.js');
 client.on("guildScheduledEventCreate", async (myevent) => {
+	current_events.push({
+		id: myevent.id,
+		name: myevent.name,
+		description: myevent.description,
+		status: myevent.stat,
+		url: myevent.url,
+		startAt: myevent.scheduledStartAt
+	})
+	//myevent.id
+	//myevent.name
+	//myevent.description
+	//myevent.status
+	//myevent.url
+
 	//Automated Notifications:
 	const eventname = myevent.name;
 	let tripped = false; let error = false; let msg;
@@ -200,14 +208,11 @@ client.on("guildScheduledEventCreate", async (myevent) => {
 	}
 	//BAD
 	if (tripped === false || error === true) {
-		const error_channel = channelID.commands_and_testing;
 		const error_msg = "<@&1235756435636486164> An event (" + eventname + ") was created but I was not able to figure out which expert its for!";
-		await client.channels.cache.get(error_channel).send(error_msg);
-		//await client.channels.cache.get(error_channel).send("omak fucked up");
+		await client.channels.cache.get(channelID.staff_alerts).send(error_msg);
 	}
 	//GOOD
 	else {
-		const { scheduledAnnounce } = require('./private_containers/scheduledAnnounce.js');
 		console.log("calling scheduledAnnounce");
 		scheduledAnnounce(client, myevent.scheduledStartAt, msg);
 	}
@@ -231,11 +236,35 @@ client.on("guildScheduledEventCreate", async (myevent) => {
 	console.log("Month: " + start_date.getMonth() + ", Day: " + mydate.getDay() + ", Hours: " + mydate.getHours() + ", Minutes: " +
 		mydate.getMinutes() + ", Seconds: " + mydate.getSeconds());
 });
+client.on("guildScheduledEventUpdate", async (oldevent, newevent) => {
+	await client.channels.cache.get(channelID.commands_and_testing).send("# UPDATE!");
+	await client.channels.cache.get(channelID.commands_and_testing).send("## old:");
+	await client.channels.cache.get(channelID.commands_and_testing).send("id: " + oldevent.id);
+	await client.channels.cache.get(channelID.commands_and_testing).send("name: " + oldevent.name);
+	await client.channels.cache.get(channelID.commands_and_testing).send("desc: " + oldevent.description);
+	await client.channels.cache.get(channelID.commands_and_testing).send("url: " + oldevent.url);
 
-const SEND_CUSTOM_MESSAGE = true;
+	await client.channels.cache.get(channelID.commands_and_testing).send("## New:");
+	await client.channels.cache.get(channelID.commands_and_testing).send("id: " + newevent.id);
+	await client.channels.cache.get(channelID.commands_and_testing).send("name: " + newevent.name);
+	await client.channels.cache.get(channelID.commands_and_testing).send("desc: " + newevent.description);
+	await client.channels.cache.get(channelID.commands_and_testing).send("url: " + newevent.url);
+
+
+})
+client.on("guildScheduledEventDelete", async (myevent) => {
+	await client.channels.cache.get(channelID.commands_and_testing).send("# DELETION!");
+	await client.channels.cache.get(channelID.commands_and_testing).send("## old:");
+	await client.channels.cache.get(channelID.commands_and_testing).send("id: " + myevent.id);
+	await client.channels.cache.get(channelID.commands_and_testing).send("name: " + myevent.name);
+	await client.channels.cache.get(channelID.commands_and_testing).send("desc: " + myevent.description);
+	await client.channels.cache.get(channelID.commands_and_testing).send("url: " + myevent.url);
+})
+
+const SEND_CUSTOM_MESSAGE = false;
 const CUSTOM_CHANNEL_ID = "1225049083669119019"; //Testing Channel ID: 1235756921521180722
 
-/*//ExampleEmbed
+/* //ExampleEmbed
 	client.on("ready", async () => 
 		{
 			if(!SEND_CUSTOM_MESSAGE) return;
@@ -261,8 +290,9 @@ const CUSTOM_CHANNEL_ID = "1225049083669119019"; //Testing Channel ID: 123575692
 			client.channels.cache.get(CUSTOM_CHANNEL_ID).send({ embeds: [exampleEmbed] });
 			
 		});*/
-/*//Info Old
+/* //Info Old
 client.on("ready", async () => {
+	if(!SEND_CUSTOM_MESSAGE) return;
 	const message =
 `# Welcome to Rumble! 
 ## What is Rumble?
@@ -280,8 +310,9 @@ client.on("ready", async () => {
 > Proceed below! ↘️`
 	client.channels.cache.get(CUSTOM_CHANNEL_ID).send(message);
 });*/
-/*//Info New
+/* //Info New
 client.on("ready", async () => {
+	if(!SEND_CUSTOM_MESSAGE) return;
 	let message =
 		`# Welcome to Rumble! 
 ## What is Rumble?
@@ -316,7 +347,7 @@ client.on("ready", async () => {
 	client.channels.cache.get(CUSTOM_CHANNEL_ID).send(message);
 
 });*/
-/*//Contact Us Old
+/* //Contact Us Old
 client.on("ready", async () => 
 	{
 		if(!SEND_CUSTOM_MESSAGE) return;
@@ -348,9 +379,8 @@ client.on("ready", async () =>
 			client.channels.cache.get(CUSTOM_CHANNEL_ID).send({ embeds: [exampleEmbed] });
 
 	});*/
-/*//Contact Us New that they want.
+/* //Contact Us New that they want.
 client.on("ready", async () => {
-
 	if (!SEND_CUSTOM_MESSAGE) return;
 	let exampleEmbed = new EmbedBuilder()
 		.setAuthor({ name: 'Rumble', iconURL: 'https://i.imgur.com/29Q6QJd.jpg' }) //grab imagur link then put an i. before "imagur" and a .fileextention
@@ -424,8 +454,9 @@ client.on("ready", async () => {
 			})
 	client.channels.cache.get(CUSTOM_CHANNEL_ID).send({ embeds: [exampleEmbed] });
 });*/
-/*//House Rules
+/* //House Rules
 client.on("ready", async () => {
+	if(!SEND_CUSTOM_MESSAGE) return;
 	let message =
 		`## House Rules
 ### 1. Be respectful
@@ -455,8 +486,9 @@ Keep your names and profile picture appropriate.`
 `
 	client.channels.cache.get(CUSTOM_CHANNEL_ID).send(message);
 });*/
-/*//Discord FAQ DEPRECATED
+/* //Discord FAQ DEPRECATED
 client.on("ready", async () => {
+	if(!SEND_CUSTOM_MESSAGE) return;
 	const message =
 "# Frequently Asked Questions\n" + 
 "These are some of our personally compiled frequently asked questions on discord. ***__If you would like to get a general overview about " +
