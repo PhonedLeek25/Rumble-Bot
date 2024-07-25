@@ -153,11 +153,6 @@ module.exports = {
       */
 
 
-      //UpvoteContainer.msgs.push({
-      //    id: msg.id,
-      //    author: msg.author.displayName,
-      //});
-
       // Bubble sort algorithm, sponsored by ChatGPT that's gonna take my job
       let n = OMAK.votes.length;
 

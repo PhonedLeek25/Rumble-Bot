@@ -136,7 +136,7 @@ client.on("messageCreate", async (message) => {
 		}
 }) */
 
-const MESSAGE_LOGGING = true;
+const MESSAGE_LOGGING = false;
 client.on("messageCreate", async (msg) => {
 	if (MESSAGE_LOGGING === true) {
 		console.log(`message detected by ${color.YELLOW}${msg.author.tag.toString()}${color.RESET}` +
@@ -164,48 +164,48 @@ client.on("messageReactionAdd", async (msgreactadd) => {
 
 const { scheduledAnnounce, current_events } = require('./private_containers/scheduledAnnounce.js');
 client.on("guildScheduledEventCreate", async (myevent) => {
-	current_events.push({
-		id: myevent.id,
-		name: myevent.name,
-		description: myevent.description,
-		status: myevent.stat,
-		url: myevent.url,
-		startAt: myevent.scheduledStartAt
-	})
-	//myevent.id
-	//myevent.name
-	//myevent.description
-	//myevent.status
-	//myevent.url
-
 	//Automated Notifications:
 	const eventname = myevent.name;
-	let tripped = false; let error = false; let msg;
+	let tripped = false; let error = false; let expertRolePing;
 	if (eventname.includes("Sergio") || eventname.includes("sergio")) {
 		if (tripped) { error = true; }
 		else { tripped = true; }
-		msg = "Live session with <@&" + RoleID.sergio + "> ";
+		expertRolePing = "<@&" + RoleID.sergio + ">";
 	}
 	if (eventname.includes("Abdelkhalek") || eventname.includes("Abdel Khalek") || eventname.includes("Abdel khalek") || eventname.includes("abdelkhalek")) {
 		if (tripped) { error = true; }
 		else { tripped = true; }
-		msg = "Live session with <@&" + RoleID.abdelkhalek + "> ";
+		expertRolePing = "<@&" + RoleID.abdelkhalek + ">";
 	}
 	if (eventname.includes("Alfy") || eventname.includes("alfy")) {
 		if (tripped) { error = true; }
 		else { tripped = true; }
-		msg = "Live session with <@&" + RoleID.alfy + "> ";
+		expertRolePing = "<@&" + RoleID.alfy + ">";
 	}
 	if (eventname.includes("Shams") || eventname.includes("shams")) {
 		if (tripped) { error = true; }
 		else { tripped = true; }
-		msg = "Live session with <@&" + RoleID.shams + "> ";
+		expertRolePing = "<@&" + RoleID.shams + ">";
 	}
 	if (eventname.includes("Hefnawi") || eventname.includes("hefnawi")) {
 		if (tripped) { error = true; }
 		else { tripped = true; }
-		msg = "Live session with <@&" + RoleID.hefnawi + "> ";
+		expertRolePing = "<@&" + RoleID.hefnawi + ">";
 	}
+	//PUSH TO current_events
+	current_events.push({
+		id: myevent.id,
+		name: myevent.name,
+		description: myevent.description,
+		startAt: myevent.scheduledStartAt,
+		url: myevent.url,
+		expert_ping: expertRolePing,
+		mode: "good"
+	});
+	console.log("=========================" + color.GREEN + " [received event]" + color.RESET + "=========================");
+	console.log(current_events[current_events.length]);
+	console.log("========================= [^^^^^^^^^^^^^^^] =========================");
+
 	//BAD
 	if (tripped === false || error === true) {
 		const error_msg = "<@&1235756435636486164> An event (" + eventname + ") was created but I was not able to figure out which expert its for!";
@@ -214,52 +214,98 @@ client.on("guildScheduledEventCreate", async (myevent) => {
 	//GOOD
 	else {
 		console.log("calling scheduledAnnounce");
-		scheduledAnnounce(client, myevent.scheduledStartAt, msg);
+		scheduledAnnounce(client, myevent.scheduledStartAt, expertRolePing, myevent.id);
 	}
-	//PC output
-	//start: Sat Jul 20 2024 16:00:00 GMT+0300 (Eastern European Summer Time) --> object
-	//Month: 6, Day: 6, Hours: 16, Minutes: 0, Seconds: 0
-	//today: Fri Jul 19 2024 14:56:09 GMT+0300 (Eastern European Summer Time)
-	//Month: 6, Day: 5, Hours: 14, Minutes: 56, Seconds: 9
-	//VM Output
-	//start: Sun Jul 21 2024 12:00:00 GMT+0000 (Coordinated Universal Time) --> object
-	//Month: 6, Day: 0, Hours: 12, Minutes: 0, Seconds: 0
-	//today: Sun Jul 21 2024 10:56:51 GMT+0000 (Coordinated Universal Time)
-	//Month: 6, Day: 0, Hours: 10, Minutes: 56, Seconds: 51
 
-	const start_date = myevent.scheduledStartAt;
-	console.log("start: " + start_date + " --> " + typeof (start_date));
-	console.log("Month: " + start_date.getMonth() + ", Day: " + start_date.getDay() + ", Hours: " + start_date.getHours() + ", Minutes: " +
-		start_date.getMinutes() + ", Seconds: " + start_date.getSeconds());
-	const mydate = new Date();
-	console.log("today: " + mydate);
-	console.log("Month: " + start_date.getMonth() + ", Day: " + mydate.getDay() + ", Hours: " + mydate.getHours() + ", Minutes: " +
-		mydate.getMinutes() + ", Seconds: " + mydate.getSeconds());
+	const log_dates = false;
+	if (log_dates) {
+		//start: Sat Jul 20 2024 16:00:00 GMT+0300 (Eastern European Summer Time) --> object
+		//Month: 6, Day: 6, Hours: 16, Minutes: 0, Seconds: 0
+		//today: Fri Jul 19 2024 14:56:09 GMT+0300 (Eastern European Summer Time)
+		//Month: 6, Day: 5, Hours: 14, Minutes: 56, Seconds: 9
+		//VM Output
+		//start: Sun Jul 21 2024 12:00:00 GMT+0000 (Coordinated Universal Time) --> object
+		//Month: 6, Day: 0, Hours: 12, Minutes: 0, Seconds: 0
+		//today: Sun Jul 21 2024 10:56:51 GMT+0000 (Coordinated Universal Time)
+		//Month: 6, Day: 0, Hours: 10, Minutes: 56, Seconds: 51
+
+		const start_date = myevent.scheduledStartAt;
+		console.log("start: " + start_date + " --> " + typeof (start_date));
+		console.log("Month: " + start_date.getMonth() + ", Day: " + start_date.getDay() + ", Hours: " + start_date.getHours() + ", Minutes: " +
+			start_date.getMinutes() + ", Seconds: " + start_date.getSeconds());
+		const mydate = new Date();
+		console.log("today: " + mydate);
+		console.log("Month: " + start_date.getMonth() + ", Day: " + mydate.getDay() + ", Hours: " + mydate.getHours() + ", Minutes: " +
+			mydate.getMinutes() + ", Seconds: " + mydate.getSeconds());
+	}
 });
 client.on("guildScheduledEventUpdate", async (oldevent, newevent) => {
-	await client.channels.cache.get(channelID.commands_and_testing).send("# UPDATE!");
+	console.log("recieved guildScheduledEventUpdate event");
+	let expertRolePing;
+	if (eventname.includes("Sergio") || eventname.includes("sergio")) { expertRolePing = "<@&" + RoleID.sergio + ">"; }
+	else if (eventname.includes("Abdelkhalek") || eventname.includes("Abdel Khalek") || eventname.includes("Abdel khalek") ||
+		eventname.includes("abdelkhalek") || eventname.includes("AbdelKhalek")) { expertRolePing = "<@&" + RoleID.abdelkhalek + ">"; }
+	else if (eventname.includes("Alfy") || eventname.includes("alfy")) { expertRolePing = "<@&" + RoleID.alfy + ">"; }
+	else if (eventname.includes("Shams") || eventname.includes("shams")) { expertRolePing = "<@&" + RoleID.shams + ">"; }
+	else if (eventname.includes("Hefnawi") || eventname.includes("hefnawi")) { expertRolePing = "<@&" + RoleID.hefnawi + ">"; }
+	else {
+		const error_msg = "<@&1235756435636486164> An event (" + eventname + ") was __**changed**__ but I was not able to " +
+			"figure out which expert its for!" + " Check " + `<#${channelID.commands_and_testing}}>` + " for more details";
+		await client.channels.cache.get(channelID.staff_alerts).send(error_msg);
+
+		await client.channels.cache.get(channelID.commands_and_testing).send("# EVENT UPDATE!");
+		await client.channels.cache.get(channelID.commands_and_testing).send("## old:");
+		await client.channels.cache.get(channelID.commands_and_testing).send("id: " + oldevent.id);
+		await client.channels.cache.get(channelID.commands_and_testing).send("name: " + oldevent.name);
+		await client.channels.cache.get(channelID.commands_and_testing).send("desc: " + oldevent.description);
+		await client.channels.cache.get(channelID.commands_and_testing).send("url: " + oldevent.url);
+
+		await client.channels.cache.get(channelID.commands_and_testing).send("## New:");
+		await client.channels.cache.get(channelID.commands_and_testing).send("id: " + newevent.id);
+		await client.channels.cache.get(channelID.commands_and_testing).send("name: " + newevent.name);
+		await client.channels.cache.get(channelID.commands_and_testing).send("desc: " + newevent.description);
+		await client.channels.cache.get(channelID.commands_and_testing).send("url: " + newevent.url);
+		return;
+	}
+
+	const index = current_events.findIndex(x => x.id === oldevent.id);
+	current_events[index] = {
+		id: newevent.id,
+		name: newevent.name,
+		description: newevent.description,
+		startAt: newevent.scheduledStartAt,
+		url: newevent.url,
+		expert_ping: expertRolePing,
+		mode: "changed"
+	};
+});
+client.on("guildScheduledEventDelete", async (oldevent) => {
+	console.log("recieved guildScheduledEventDelete event");
+	client.channels.cache.get(channelID.staff_alerts).send(`An event has been deleted. Please check <#${channelID.commands_and_testing}> for details.`);
+	const index = current_events.findIndex(x => x.id === oldevent.id);
+	const myevent = current_events[index];
+	current_events[index] = {
+		id: myevent.id,
+		name: myevent.name,
+		description: myevent.description,
+		startAt: myevent.scheduledStartAt,
+		url: myevent.url,
+		expert_ping: myevent.expertRolePing,
+		mode: "canceled"
+	};
+
+	if (myevent.startAt < (1000 * 60 * 60)) { //if <1hr
+		client.channels.cache.get(channelID.staff_alerts).send(`Warning, the deleted event "${myevent.name}" was starting in <1hr.` +
+			`the bot will not be able to delete any old message, so you might want to clean up any remaining messages in <#${channelID.announcements}>`);
+	}
+
+	await client.channels.cache.get(channelID.commands_and_testing).send("# EVENT DELETION!");
 	await client.channels.cache.get(channelID.commands_and_testing).send("## old:");
 	await client.channels.cache.get(channelID.commands_and_testing).send("id: " + oldevent.id);
 	await client.channels.cache.get(channelID.commands_and_testing).send("name: " + oldevent.name);
 	await client.channels.cache.get(channelID.commands_and_testing).send("desc: " + oldevent.description);
 	await client.channels.cache.get(channelID.commands_and_testing).send("url: " + oldevent.url);
-
-	await client.channels.cache.get(channelID.commands_and_testing).send("## New:");
-	await client.channels.cache.get(channelID.commands_and_testing).send("id: " + newevent.id);
-	await client.channels.cache.get(channelID.commands_and_testing).send("name: " + newevent.name);
-	await client.channels.cache.get(channelID.commands_and_testing).send("desc: " + newevent.description);
-	await client.channels.cache.get(channelID.commands_and_testing).send("url: " + newevent.url);
-
-
-})
-client.on("guildScheduledEventDelete", async (myevent) => {
-	await client.channels.cache.get(channelID.commands_and_testing).send("# DELETION!");
-	await client.channels.cache.get(channelID.commands_and_testing).send("## old:");
-	await client.channels.cache.get(channelID.commands_and_testing).send("id: " + myevent.id);
-	await client.channels.cache.get(channelID.commands_and_testing).send("name: " + myevent.name);
-	await client.channels.cache.get(channelID.commands_and_testing).send("desc: " + myevent.description);
-	await client.channels.cache.get(channelID.commands_and_testing).send("url: " + myevent.url);
-})
+});
 
 const SEND_CUSTOM_MESSAGE = false;
 const CUSTOM_CHANNEL_ID = "1225049083669119019"; //Testing Channel ID: 1235756921521180722
