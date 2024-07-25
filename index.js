@@ -107,7 +107,15 @@ client.on(Events.InteractionCreate, async interaction => {
 */
 
 //-------------------------------------------------------READY-------------------------------------------------------//
+const TESTING = true
 client.on("ready", async () => {
+	if (TESTING) {
+		console.log(`${color.YELLOW}Warning: Running in TESTING mode${color.RESET}`);
+		await client.channels.cache.get(channelID.commands_and_testing).send("## Warning, TESTING mode is on!");
+		channelID.announcements = channelID.commands_and_testing;
+		channelID.staff_alerts = channelID.commands_and_testing;
+		console.log(channelID);
+	}
 	console.log(color.GREEN + "Logged in!" + color.RESET); //Logged In! console message
 	client.user.setStatus(PresenceUpdateStatus.Online); //Status Online
 	//console.log("Status set to: " + color.GREEN + "Online" + color.RESET);
