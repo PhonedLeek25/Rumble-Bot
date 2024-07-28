@@ -22,7 +22,6 @@ async function getTimeLeft(sched_date) {
 
 async function scheduledAnnounce(client, sched_date, eventID) {
     const { channelID } = require("../public_containers/channelID");
-    console.log("scheduledAnnounce started");
     const wait = require('node:timers/promises').setTimeout; //to be able to wait.
 
     //collect message ID template: const start_message_id = (await interaction.channel.send("Marking Start ID...")).id
@@ -33,10 +32,10 @@ async function scheduledAnnounce(client, sched_date, eventID) {
     let msleft = getTimeLeft(sched_date);
 
     //Check for updates
-    do {
-        await wait(ms_1hr / 4); //15m
+    while (msleft > (ms_1day + (ms_1hr / 2))) {
+        //await wait(ms_1hr / 4); //15m
+        await wait(5_000);
         const index = current_events.findIndex(x => x.id === eventID);
-        console.log("index: " + current_events[index]);
         const newStartAt = current_events[index].startAt;
         const mode = current_events[index].mode;
         if (mode == "chanaged") {
@@ -52,8 +51,8 @@ async function scheduledAnnounce(client, sched_date, eventID) {
             console.log("event " + current_events[index].name + "has been cancelled. scheduledAnnounce.js will now return.");
             return;
         }
-    } while (msleft > (ms_1day + (ms_1hr / 2)));
-    console.log(`event "${current_events[current_events.findIndex(x => x.id === eventID)].name} has been promoted to 24h left`);
+    }
+    console.log(`event "${current_events[current_events.findIndex(x => x.id === eventID)].name} has been promoted to 24hr left`);
     msleft = await getTimeLeft(sched_date)
 
 
@@ -64,14 +63,16 @@ async function scheduledAnnounce(client, sched_date, eventID) {
         await wait(msleft - 86400000); //wait till 24hrs before the event
         console.log("24hr over");
         const details = current_events[current_events.findIndex(x => x.id === eventID)];
-        messageID = (await client.channels.cache.get(channelID.announcements).send(ping + " Tune in for [" + details.name + `](${details.url})`
-            `happening on <t:${Math.floor(sched_date.getTime() / 1000)}> (<t:${Math.floor(sched_date.getTime() / 1000)}:R>)`)).id;
+        const mymessage = `${details.expert_ping} Tune in for [${details.name} ](${details.url})` +
+            `happening on <t:${Math.floor(sched_date.getTime() / 1000)}:F> (<t:${Math.floor(sched_date.getTime() / 1000)}:R>)`;
+        messageID = (await client.channels.cache.get(channelID.announcements).send(mymessage)).id;
         //Discord uses UNIX_TIMESTAMP() seconds! not ms.
         msleft -= 86400000;
     }
+    else { console.log("    event has <24 left, skipping to 1hr") };
 
     //Check for updates
-    do {
+    while (msleft > ms_1hr + (ms_1hr / 2)) {
         await wait(ms_1hr / 4); //15m
         const index = current_events.findIndex(x => x.id === eventID);
         console.log("index: " + current_events[index]);
@@ -85,6 +86,7 @@ async function scheduledAnnounce(client, sched_date, eventID) {
             //Get new times
             sched_date = newStartAt;
             msleft = await getTimeLeft(newStartAt);
+
             current_events[index].mode = "good";
             //Send new message
             await client.channels.cache.get(channelID.announcements).send(ping + " Event Changed: [" + details.name + `](${details.url})`
@@ -99,18 +101,19 @@ async function scheduledAnnounce(client, sched_date, eventID) {
             console.log("event " + current_events[index].name + "has been cancelled. scheduledAnnounce.js will now return.");
             return;
         }
-    } while (msleft > ms_1hr + (ms_1hr / 2));
-    console.log(`event "${current_events[current_events.findIndex(x => x.id === eventID)].name} has been promoted to 24h left`);
+    }
+    console.log(`event "${current_events[current_events.findIndex(x => x.id === eventID)].name} has been promoted to 1hr left`);
     msleft = await getTimeLeft(sched_date)
 
 
     //Announce before event starts by 1 Hour!
-    const details = current_events[current_events.findIndex(x => x.id === eventID)];
     if (msleft >= ms_1hr) {
         console.log(">=1hr");
         await wait(msleft - ms_1hr);  //wait till 12hrs before the event
         console.log("1hr over.");
-        await client.channels.cache.get(channelID.announcements).send(`${details.ping} + Reminder: *${details.name}* **starting in 1 hour!**`);
+        const details = current_events[current_events.findIndex(x => x.id === eventID)];
+        const mymessage = `${details.ping} + Reminder: __*${details.name}*__ **starting in 1 hour!**`;
+        await client.channels.cache.get(channelID.announcements).send(mymessage);
     }
     else {
         await client.channels.cache.get(channelID.commands_and_testing).send("<@261216694901538816> error, tried to warn 1hr before but <1hr left\n" +
