@@ -107,7 +107,7 @@ client.on(Events.InteractionCreate, async interaction => {
 */
 
 //-------------------------------------------------------READY-------------------------------------------------------//
-const TESTING = true
+const TESTING = false
 client.on("ready", async () => {
 	if (TESTING) {
 		console.log(`${color.YELLOW}Warning: Running in TESTING mode${color.RESET}`);
