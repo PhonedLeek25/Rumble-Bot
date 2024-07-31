@@ -107,17 +107,17 @@ async function scheduledAnnounce(client, sched_date, eventID) {
 
 
     //Announce before event starts by 1 Hour!
+    const details = current_events[current_events.findIndex(x => x.id === eventID)];
     if (msleft >= ms_1hr) {
         console.log(">=1hr");
         await wait(msleft - ms_1hr);  //wait till 12hrs before the event
         console.log("1hr over.");
-        const details = current_events[current_events.findIndex(x => x.id === eventID)];
         const mymessage = `${details.ping} + Reminder: __*${details.name}*__ **starting in 1 hour!**`;
         await client.channels.cache.get(channelID.announcements).send(mymessage);
     }
     else {
-        await client.channels.cache.get(channelID.commands_and_testing).send("<@261216694901538816> error, tried to warn 1hr before but <1hr left\n" +
-            "event name: " + details.name);
+        const mymessage = "<@261216694901538816> error, tried to warn 1hr before but only <1hr left\nevent name: " + details.name;
+        await client.channels.cache.get(channelID.commands_and_testing).send(mymessage);
     }
 
     //Clean up job
