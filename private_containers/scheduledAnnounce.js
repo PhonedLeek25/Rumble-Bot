@@ -75,7 +75,7 @@ async function scheduledAnnounce(client, sched_date, eventID) {
     while (msleft > ms_1hr + (ms_1hr / 2)) {
         await wait(ms_1hr / 4); //15m
         const index = current_events.findIndex(x => x.id === eventID);
-        console.log("index: " + current_events[index]);
+        console.log("\"" + current_events[index].name + "\" On hold for 30m");
         const newStartAt = current_events[index].startAt;
         const mode = current_events[index].mode;
         if (mode == "chanaged") {
