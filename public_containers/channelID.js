@@ -1,4 +1,5 @@
 const channelID = {
+    subscription_required: "1268510334952673351",
     the_amphitheatre: "1247143690254815282",
     abdelkhalek_stage: "1249283950782976145",
     alfy_stage: "1249280621230948373",
