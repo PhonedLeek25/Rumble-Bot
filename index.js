@@ -1,3 +1,4 @@
+//ctrl + l  +  ctrl + 1 to collapse all
 require("dotenv").config();
 const fs = require("node:fs"); //NODE.JS's Native File System (choose directory/file navigation)
 const path = require("node:path"); //Node.js's Native Pathing Utility Module. helps construct paths to files and directories & automatically detects OS.
@@ -6,9 +7,7 @@ const { color } = require("./public_containers/color.js");
 const { RoleID } = require("./public_containers/RoleID.js");
 const { channelID } = require("./public_containers/channelID.js");
 const { Client, GatewayIntentBits, Collection, Events, ActivityType, PresenceUpdateStatus, EmbedBuilder, managerToFetchingStrategyOptions,
-	GuildDefaultMessageNotifications } = require("discord.js");
-//const exp = require("node:constants");
-//const { isAsyncFunction } = require("node:util/types");
+	GuildDefaultMessageNotifications, Guild } = require("discord.js");
 const client = new Client({ //DECLARE CLIENT ==> Includes: Intents.
 	intents: [
 		GatewayIntentBits.Guilds,
@@ -325,7 +324,7 @@ client.on("guildScheduledEventDelete", async (oldevent) => {
 	await client.channels.cache.get(channelID.commands_and_testing).send("url: " + oldevent.url);
 });
 
-const SEND_CUSTOM_MESSAGE = true;
+const SEND_CUSTOM_MESSAGE = false;
 const CUSTOM_CHANNEL_ID = "1225049083669119019"; //Testing Channel ID: 1235756921521180722
 
 /* //ExampleEmbed
