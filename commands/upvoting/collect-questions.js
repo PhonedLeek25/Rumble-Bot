@@ -15,7 +15,8 @@ module.exports = {
       return;
     }
     //Check if in a valid channel
-    if (!UpvoteContainer.valid_channel_IDs.includes(await interaction.channelId)) {
+    const CHECK_FOR_VALID_CHANNEL = false
+    if (!UpvoteContainer.valid_channel_IDs.includes(await interaction.channelId) && CHECK_FOR_VALID_CHANNEL) {
       interaction.reply({ content: "This channel is not valid for collecting questions.", ephemeral: true });
       return;
     }

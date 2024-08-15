@@ -1,7 +1,6 @@
 const { RoleID } = require("../public_containers/RoleID");
 
 let current_events = [];
-
 /*
     current_events.push({
         id: myevent.id,
