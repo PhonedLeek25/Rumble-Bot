@@ -1,4 +1,4 @@
-//ctrl + l  +  ctrl + 1 to collapse all
+//<ctrl+k> + <ctrl+1> to collapse all
 require("dotenv").config();
 const fs = require("node:fs"); //NODE.JS's Native File System (choose directory/file navigation)
 const path = require("node:path"); //Node.js's Native Pathing Utility Module. helps construct paths to files and directories & automatically detects OS.
@@ -120,6 +120,7 @@ client.on("ready", async () => {
 	client.user.setActivity("the stock market", { type: ActivityType.Watching }); //Watching the stock market
 	//console.log("Activity set to: " + color.YELLOW + "Watching the stock market" + color.RESET);
 
+	console.log(await client.channels.cache.get(channelID.commands_and_testing).threads); //figure out how to send a message in a thread
 	//const { RefreshUsers } = require('./commands/user-control/RefreshUsers.js');
 	//await RefreshUsers(client);//Do it once.
 	//setInterval(RefreshUsers, 21600000); //6 hours (21,600,000 milliseconds) = 21600000
@@ -205,14 +206,14 @@ client.on("guildScheduledEventCreate", async (myevent) => {
 		description: myevent.description,
 		startAt: myevent.scheduledStartAt,
 		url: myevent.url,
+		status: myevent.status,
 		expert_ping: expertRolePing,
 		mode: "good"
 	});
-	if (TESTING) {
-		console.log("=========================" + color.GREEN + " [received event]" + color.RESET + "=========================");
-		console.log(current_events[current_events.length - 1]);
-		console.log("========================= [^^^^^^^^^^^^^^^] =========================");
-	}
+	console.log("=========================" + color.GREEN + " [received event]" + color.RESET + "=========================");
+	console.log(current_events[current_events.length - 1]);
+	console.log("========================= [^^^^^^^^^^^^^^^] =========================");
+	//	await client.channels.cache.get(channelID.commands_and_testing).threads
 
 	//BAD
 	if (tripped === false || error === true) {
@@ -262,8 +263,8 @@ client.on("guildScheduledEventUpdate", async (oldevent, newevent) => {
 	else if (eventname.includes("Shams") || eventname.includes("shams")) { expertRolePing = "<@&" + RoleID.shams + ">"; }
 	else if (eventname.includes("Hefnawi") || eventname.includes("hefnawi")) { expertRolePing = "<@&" + RoleID.hefnawi + ">"; }
 	else {
-		const error_msg = "<@&1235756435636486164> An event (" + eventname + ") was __**changed**__ but I was not able to " +
-			"figure out which expert its for!" + " Check " + `<#${channelID.commands_and_testing}}>` + " for more details";
+		const error_msg = "<@&1235756435636486164> An event \"" + eventname + "\" was __**changed**__ but I was not able to " +
+			"figure out which expert its for!" + " Check " + `<#${channelID.commands_and_testing}>` + " for more details";
 		await client.channels.cache.get(channelID.staff_alerts).send(error_msg);
 
 		await client.channels.cache.get(channelID.commands_and_testing).send("# EVENT UPDATE!");
@@ -272,12 +273,14 @@ client.on("guildScheduledEventUpdate", async (oldevent, newevent) => {
 		await client.channels.cache.get(channelID.commands_and_testing).send("name: " + oldevent.name);
 		await client.channels.cache.get(channelID.commands_and_testing).send("desc: " + oldevent.description);
 		await client.channels.cache.get(channelID.commands_and_testing).send("url: " + oldevent.url);
+		await client.channels.cache.get(channelID.commands_and_testing).send("status: " + oldevent.status);
 
 		await client.channels.cache.get(channelID.commands_and_testing).send("## New:");
 		await client.channels.cache.get(channelID.commands_and_testing).send("id: " + newevent.id);
 		await client.channels.cache.get(channelID.commands_and_testing).send("name: " + newevent.name);
 		await client.channels.cache.get(channelID.commands_and_testing).send("desc: " + newevent.description);
 		await client.channels.cache.get(channelID.commands_and_testing).send("url: " + newevent.url);
+		await client.channels.cache.get(channelID.commands_and_testing).send("status: " + newevent.status);
 		return;
 	}
 
@@ -289,6 +292,7 @@ client.on("guildScheduledEventUpdate", async (oldevent, newevent) => {
 			description: newevent.description,
 			startAt: newevent.scheduledStartAt,
 			url: newevent.url,
+			status: newevent.status,
 			expert_ping: expertRolePing,
 			mode: "changed"
 		};
@@ -307,6 +311,7 @@ client.on("guildScheduledEventDelete", async (oldevent) => {
 		description: myevent.description,
 		startAt: myevent.scheduledStartAt,
 		url: myevent.url,
+		status: myevent.status,
 		expert_ping: myevent.expertRolePing,
 		mode: "canceled"
 	};
@@ -322,6 +327,7 @@ client.on("guildScheduledEventDelete", async (oldevent) => {
 	await client.channels.cache.get(channelID.commands_and_testing).send("name: " + oldevent.name);
 	await client.channels.cache.get(channelID.commands_and_testing).send("desc: " + oldevent.description);
 	await client.channels.cache.get(channelID.commands_and_testing).send("url: " + oldevent.url);
+	await client.channels.cache.get(channelID.commands_and_testing).send("status: " + oldevent.status);
 });
 
 const SEND_CUSTOM_MESSAGE = false;

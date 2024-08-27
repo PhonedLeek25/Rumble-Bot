@@ -8,6 +8,7 @@ let current_events = [];
         description: myevent.description,
         startAt: myevent.scheduledStartAt,
         url: myevent.url,
+        status: myevent.status,
         expert_ping: expertRolePing,
         mode: "good"
     }); 
