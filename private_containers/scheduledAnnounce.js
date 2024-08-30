@@ -5,6 +5,7 @@ let current_events = [];
     current_events.push({
         id: myevent.id,
         name: myevent.name,
+        channelid: myevent.channelId,
         description: myevent.description,
         startAt: myevent.scheduledStartAt,
         url: myevent.url,
@@ -57,7 +58,7 @@ async function scheduledAnnounce(client, sched_date, eventID) {
             return;
         }
     }
-    console.log(`[$timeNowReadable()}]: event "${current_events[current_events.findIndex(x => x.id === eventID)].name}" has been promoted to 24hr left`);
+    console.log(`[${timeNowReadable()}]: event "${current_events[current_events.findIndex(x => x.id === eventID)].name}" has been promoted to 24hr left`);
     msleft = await getTimeLeft(sched_date)
 
 
@@ -74,7 +75,7 @@ async function scheduledAnnounce(client, sched_date, eventID) {
         //Discord uses UNIX_TIMESTAMP() seconds! not ms.
         msleft -= 86400000;
     }
-    else { console.log(`[$timeNowReadable()}]: event "${current_events[current_events.findIndex(x => x.id === eventID)].name}" has <24 left, skipping to 1hr`) };
+    else { console.log(`[${timeNowReadable()}]: event "${current_events[current_events.findIndex(x => x.id === eventID)].name}" has <24 left, promoting`) };
 
     //Check for updates
     while (msleft > ms_1hr + (ms_1hr)) {
@@ -107,7 +108,7 @@ async function scheduledAnnounce(client, sched_date, eventID) {
             return;
         }
     }
-    console.log(`[$timeNowReadable()}]: event "${current_events[current_events.findIndex(x => x.id === eventID)].name} has been promoted to 1hr left`);
+    console.log(`[${timeNowReadable()}]: event "${current_events[current_events.findIndex(x => x.id === eventID)].name} has been promoted to 1hr left`);
     msleft = await getTimeLeft(sched_date)
 
 

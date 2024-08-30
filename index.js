@@ -122,6 +122,7 @@ client.on("ready", async () => {
 
 	const myObject = { name: "John", age: 30, city: "New York" };
 	console.log(myObject);
+	console.log(JSON.stringify(myObject));
 
 	//const { RefreshUsers } = require('./commands/user-control/RefreshUsers.js');
 	//await RefreshUsers(client);//Do it once.
@@ -205,6 +206,7 @@ client.on("guildScheduledEventCreate", async (myevent) => {
 	current_events.push({
 		id: myevent.id,
 		name: myevent.name,
+		channelid: myevent.channelId,
 		description: myevent.description,
 		startAt: myevent.scheduledStartAt,
 		url: myevent.url,
@@ -212,6 +214,7 @@ client.on("guildScheduledEventCreate", async (myevent) => {
 		expert_ping: expertRolePing,
 		mode: "good"
 	});
+	console.log(new Date());
 	console.log("=========================" + color.GREEN + " [received event]" + color.RESET + "=========================");
 	console.log(current_events[current_events.length - 1]);
 	console.log("========================= [^^^^^^^^^^^^^^^] =========================");
@@ -219,7 +222,7 @@ client.on("guildScheduledEventCreate", async (myevent) => {
 
 	//BAD
 	if (tripped === false || error === true) {
-		const error_msg = "<@&1235756435636486164> An event (" + eventname + ") was created but I was not able to figure out which expert its for!";
+		const error_msg = `<@&${RoleID.staff}> An event ("${eventname}") was created but I was not able to figure out which expert its for!`;
 		await client.channels.cache.get(channelID.staff_alerts).send(error_msg);
 		console.log(color.RED + "bad event, popping.." + color.RESET);
 		current_events.pop();
@@ -228,7 +231,7 @@ client.on("guildScheduledEventCreate", async (myevent) => {
 	}
 	//GOOD
 	else {
-		console.log("calling scheduledAnnounce");
+		console.log("[" + new Date() + "]: calling scheduledAnnounce");
 		scheduledAnnounce(client, myevent.scheduledStartAt, myevent.id);
 	}
 
@@ -273,6 +276,7 @@ client.on("guildScheduledEventUpdate", async (oldevent, newevent) => {
 		await client.channels.cache.get(channelID.commands_and_testing).send("## old:");
 		await client.channels.cache.get(channelID.commands_and_testing).send("id: " + oldevent.id);
 		await client.channels.cache.get(channelID.commands_and_testing).send("name: " + oldevent.name);
+		await client.channels.cache.get(channelID.commands_and_testing).send("channelid: " + oldevent.channelid);
 		await client.channels.cache.get(channelID.commands_and_testing).send("desc: " + oldevent.description);
 		await client.channels.cache.get(channelID.commands_and_testing).send("url: " + oldevent.url);
 		await client.channels.cache.get(channelID.commands_and_testing).send("status: " + oldevent.status);
@@ -280,6 +284,7 @@ client.on("guildScheduledEventUpdate", async (oldevent, newevent) => {
 		await client.channels.cache.get(channelID.commands_and_testing).send("## New:");
 		await client.channels.cache.get(channelID.commands_and_testing).send("id: " + newevent.id);
 		await client.channels.cache.get(channelID.commands_and_testing).send("name: " + newevent.name);
+		await client.channels.cache.get(channelID.commands_and_testing).send("channelid: " + newevent.channelid);
 		await client.channels.cache.get(channelID.commands_and_testing).send("desc: " + newevent.description);
 		await client.channels.cache.get(channelID.commands_and_testing).send("url: " + newevent.url);
 		await client.channels.cache.get(channelID.commands_and_testing).send("status: " + newevent.status);
@@ -291,6 +296,7 @@ client.on("guildScheduledEventUpdate", async (oldevent, newevent) => {
 		current_events[index] = {
 			id: newevent.id,
 			name: newevent.name,
+			channelid: myevent.channelId,
 			description: newevent.description,
 			startAt: newevent.scheduledStartAt,
 			url: newevent.url,
@@ -310,6 +316,7 @@ client.on("guildScheduledEventDelete", async (oldevent) => {
 	current_events[index] = {
 		id: myevent.id,
 		name: myevent.name,
+		channelid: myevent.channelId,
 		description: myevent.description,
 		startAt: myevent.scheduledStartAt,
 		url: myevent.url,
@@ -327,6 +334,7 @@ client.on("guildScheduledEventDelete", async (oldevent) => {
 	await client.channels.cache.get(channelID.commands_and_testing).send("## old:");
 	await client.channels.cache.get(channelID.commands_and_testing).send("id: " + oldevent.id);
 	await client.channels.cache.get(channelID.commands_and_testing).send("name: " + oldevent.name);
+	await client.channels.cache.get(channelID.commands_and_testing).send("channelid: " + oldevent.channelid);
 	await client.channels.cache.get(channelID.commands_and_testing).send("desc: " + oldevent.description);
 	await client.channels.cache.get(channelID.commands_and_testing).send("url: " + oldevent.url);
 	await client.channels.cache.get(channelID.commands_and_testing).send("status: " + oldevent.status);
