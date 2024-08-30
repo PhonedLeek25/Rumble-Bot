@@ -10,10 +10,11 @@ module.exports = {
             await interaction.reply("No current events in memory.");
             return;
         }
+
+        interaction.reply("# Current Scheduled Events:");
         for (let x = 0; x < current_events.length; x++) {
-            const message = `${current_events[x]}`;
-            await interaction.reply(message);
+            console.log(current_events[x]);
+            await interaction.followUp(JSON.stringify(current_events[x]));
         }
-        await interaction.followUp(current_events.entries());
     },
 };

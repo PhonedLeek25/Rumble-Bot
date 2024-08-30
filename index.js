@@ -120,7 +120,8 @@ client.on("ready", async () => {
 	client.user.setActivity("the stock market", { type: ActivityType.Watching }); //Watching the stock market
 	//console.log("Activity set to: " + color.YELLOW + "Watching the stock market" + color.RESET);
 
-	//console.log(await client.channels.cache.get(channelID.commands_and_testing).threads); //figure out how to send a message in a thread
+	const myObject = { name: "John", age: 30, city: "New York" };
+	console.log(myObject);
 
 	//const { RefreshUsers } = require('./commands/user-control/RefreshUsers.js');
 	//await RefreshUsers(client);//Do it once.
