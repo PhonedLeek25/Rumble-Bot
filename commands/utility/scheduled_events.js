@@ -6,8 +6,13 @@ module.exports = {
         .setName('scheduled_events')
         .setDescription('get current list of working/scheduled events recognized by Rumble bot'),
     async execute(interaction) {
-        const message =
-            `${current_events}`;
-        await interaction.reply(message);
+        if (current_events.length == 0) {
+            await interaction.reply("No current events in memory.");
+            return;
+        }
+        for (let x = 0; x < current_events.length; x++) {
+            const message = `${current_events[x]}`;
+            await interaction.reply(message);
+        }
     },
 };
