@@ -14,5 +14,6 @@ module.exports = {
             const message = `${current_events[x]}`;
             await interaction.reply(message);
         }
+        await interaction.reply(current_events.entries());
     },
 };

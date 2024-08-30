@@ -1,4 +1,4 @@
-//<ctrl+k> + <ctrl+1> to collapse all
+//<ctrl+k (or l on pc?)> + <ctrl+1> to collapse all
 require("dotenv").config();
 const fs = require("node:fs"); //NODE.JS's Native File System (choose directory/file navigation)
 const path = require("node:path"); //Node.js's Native Pathing Utility Module. helps construct paths to files and directories & automatically detects OS.
@@ -120,7 +120,8 @@ client.on("ready", async () => {
 	client.user.setActivity("the stock market", { type: ActivityType.Watching }); //Watching the stock market
 	//console.log("Activity set to: " + color.YELLOW + "Watching the stock market" + color.RESET);
 
-	console.log(await client.channels.cache.get(channelID.commands_and_testing).threads); //figure out how to send a message in a thread
+	//console.log(await client.channels.cache.get(channelID.commands_and_testing).threads); //figure out how to send a message in a thread
+
 	//const { RefreshUsers } = require('./commands/user-control/RefreshUsers.js');
 	//await RefreshUsers(client);//Do it once.
 	//setInterval(RefreshUsers, 21600000); //6 hours (21,600,000 milliseconds) = 21600000
