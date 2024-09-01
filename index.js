@@ -116,13 +116,13 @@ client.on("ready", async () => {
 	}
 	console.log(color.GREEN + "Logged in!" + color.RESET); //Logged In! console message
 	client.user.setStatus(PresenceUpdateStatus.Online); //Status Online
-	//console.log("Status set to: " + color.GREEN + "Online" + color.RESET);
+	console.log("Status set to: " + color.GREEN + "Online" + color.RESET);
 	client.user.setActivity("the stock market", { type: ActivityType.Watching }); //Watching the stock market
-	//console.log("Activity set to: " + color.YELLOW + "Watching the stock market" + color.RESET);
+	console.log("Activity set to: " + color.YELLOW + "Watching the stock market" + color.RESET);
 
-	const myObject = { name: "John", age: 30, city: "New York" };
-	console.log(myObject);
-	console.log(JSON.stringify(myObject));
+	//const myObject = { name: "John", age: 30, city: "New York" };
+	//console.log(myObject);
+	//console.log(JSON.stringify(myObject));
 
 	//const { RefreshUsers } = require('./commands/user-control/RefreshUsers.js');
 	//await RefreshUsers(client);//Do it once.
