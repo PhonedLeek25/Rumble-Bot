@@ -1,4 +1,4 @@
-const { color } = require("../../public_containers/color.js");
+const { color } = require("../../global_variables/color.js");
 const RUMBLE_GUILD_ID = "1222497591573614665";
 
 async function RefreshUsers(client) {

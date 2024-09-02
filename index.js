@@ -3,9 +3,9 @@ require("dotenv").config();
 const fs = require("node:fs"); //NODE.JS's Native File System (choose directory/file navigation)
 const path = require("node:path"); //Node.js's Native Pathing Utility Module. helps construct paths to files and directories & automatically detects OS.
 const { UpvoteContainer, OnNewMessage } = require("./commands/upvoting/UpvoteContainer.js"); //Fetch UpvoteContainer
-const { color } = require("./public_containers/color.js");
-const { RoleID } = require("./public_containers/RoleID.js");
-const { channelID } = require("./public_containers/channelID.js");
+const { color } = require("./global_variables/color.js");
+const { RoleID } = require("./global_variables/RoleID.js");
+const { channelID } = require("./global_variables/channelID.js");
 const { Client, GatewayIntentBits, Collection, Events, ActivityType, PresenceUpdateStatus, EmbedBuilder, managerToFetchingStrategyOptions,
 	GuildDefaultMessageNotifications, Guild, Colors } = require("discord.js");
 const client = new Client({ //DECLARE CLIENT ==> Includes: Intents.

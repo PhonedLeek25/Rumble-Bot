@@ -56,6 +56,9 @@ module.exports = {
 					}
 				}
 			}
+			else if (interaction.customId == "feedbackModalSubmission") {
+
+			}
 		}
 		else {
 			console.log("interaction isn't a ChatInputCommand :(")

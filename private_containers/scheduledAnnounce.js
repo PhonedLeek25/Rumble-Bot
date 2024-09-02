@@ -1,4 +1,4 @@
-const { RoleID } = require("../public_containers/RoleID");
+const { RoleID } = require("../global_variables/RoleID");
 
 let current_events = [];
 /*
@@ -27,7 +27,7 @@ async function getTimeLeft(sched_date) {
 }
 
 async function scheduledAnnounce(client, sched_date, eventID) {
-    const { channelID } = require("../public_containers/channelID");
+    const { channelID } = require("../global_variables/channelID");
     const wait = require('node:timers/promises').setTimeout; //to be able to wait.
 
     //collect message ID template: const start_message_id = (await interaction.channel.send("Marking Start ID...")).id

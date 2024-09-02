@@ -1,8 +1,8 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { UpvoteContainer } = require("./UpvoteContainer.js"); //NEEDS TO BE THE SAME NAME AS THE CLASS'S NAME
 const wait = require('node:timers/promises').setTimeout; //to be able to wait.
-const { color } = require("../../public_containers/color.js");
-const { RoleID } = require('../../public_containers/RoleID.js');
+const { color } = require("../../global_variables/color.js");
+const { RoleID } = require('../../global_variables/RoleID.js');
 
 module.exports = {
   data: new SlashCommandBuilder()

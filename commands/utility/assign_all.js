@@ -1,4 +1,4 @@
-const { RoleID } = require("../../public_containers/RoleID.js");
+const { RoleID } = require("../../global_variables/RoleID.js");
 const { SlashCommandBuilder } = require("discord.js");
 
 module.exports = {
