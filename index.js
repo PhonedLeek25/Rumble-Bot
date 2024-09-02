@@ -173,6 +173,7 @@ client.on("messageReactionAdd", async (msgreactadd) => {
 });
 
 const { scheduledAnnounce, current_events } = require('./private_containers/scheduledAnnounce.js');
+const { stringify } = require("node:querystring");
 client.on("guildScheduledEventCreate", async (myevent) => {
 	//Automated Notifications:
 	const eventname = myevent.name;
@@ -182,7 +183,8 @@ client.on("guildScheduledEventCreate", async (myevent) => {
 		else { tripped = true; }
 		expertRolePing = "<@&" + RoleID.sergio + ">";
 	}
-	if (eventname.includes("Abdelkhalek") || eventname.includes("Abdel Khalek") || eventname.includes("Abdel khalek") || eventname.includes("abdelkhalek")) {
+	if (eventname.includes("Abdelkhalek") || eventname.includes("Abdel Khalek") || eventname.includes("Abdel khalek") ||
+		eventname.includes("abdelkhalek")) {
 		if (tripped) { error = true; }
 		else { tripped = true; }
 		expertRolePing = "<@&" + RoleID.abdelkhalek + ">";
@@ -214,11 +216,10 @@ client.on("guildScheduledEventCreate", async (myevent) => {
 		expert_ping: expertRolePing,
 		mode: "good"
 	});
-	console.log(new Date());
+	console.log(new Date().toString());
 	console.log("=========================" + color.GREEN + " [received event]" + color.RESET + "=========================");
 	console.log(current_events[current_events.length - 1]);
 	console.log("========================= [^^^^^^^^^^^^^^^] =========================");
-	//	await client.channels.cache.get(channelID.commands_and_testing).threads
 
 	//BAD
 	if (tripped === false || error === true) {
@@ -231,12 +232,18 @@ client.on("guildScheduledEventCreate", async (myevent) => {
 	}
 	//GOOD
 	else {
-		console.log("[" + new Date() + "]: calling scheduledAnnounce");
+		console.log(`[${new Date().toString()}]: calling scheduledAnnounce`);
+		await client.channels.cache.get(channelID.commands_and_testing).send("Event Registered: " + JSON.stringify(myevent));
 		scheduledAnnounce(client, myevent.scheduledStartAt, myevent.id);
 	}
 
 	const log_dates = false;
 	if (log_dates || TESTING) {
+
+		//console.log(new Date().toString()); //perfectly detailed readable format
+		//console.log(new Date().toDateString()); //Date only (no time or zone), ex: "Mon Sep 02 2024"
+		//Date.now() //Date.now() prints in UNIX time format 1725279223194 i.e. seconds since GMT 0 on 199-something
+
 		//start: Sat Jul 20 2024 16:00:00 GMT+0300 (Eastern European Summer Time) --> object
 		//Month: 6, Day: 6, Hours: 16, Minutes: 0, Seconds: 0
 		//today: Fri Jul 19 2024 14:56:09 GMT+0300 (Eastern European Summer Time)

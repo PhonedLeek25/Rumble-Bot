@@ -9,4 +9,4 @@ const color = {
     WHITE: "\x1b[37m",
 };
 
-module.exports = {color};
+module.exports = { color };

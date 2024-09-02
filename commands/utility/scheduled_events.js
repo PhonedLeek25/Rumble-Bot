@@ -11,9 +11,8 @@ module.exports = {
             return;
         }
 
-        interaction.reply("# Current Scheduled Events:");
+        await interaction.reply("# Current Scheduled Events:");
         for (let x = 0; x < current_events.length; x++) {
-            console.log(current_events[x]);
             await interaction.followUp(JSON.stringify(current_events[x]));
         }
     },
