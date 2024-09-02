@@ -1,5 +1,6 @@
 const RoleID = {
 	administrator: "1235324052810371167",
+	community_manager: "1245380492489003109",
 	moderator: "1238175989264285707",
 	expert: "1249290954054176813",
 	help_team: "1235756510857007174",

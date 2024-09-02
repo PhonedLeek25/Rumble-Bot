@@ -1,5 +1,5 @@
 const { RoleID } = require("../../global_variables/RoleID.js");
-const { SlashCommandBuilder, ModalBuilder, ActionRowBuilder, TextInputBuilder, TextInputStyle } = require("discord.js");
+const { SlashCommandBuilder, ModalBuilder, ActionRowBuilder, TextInputBuilder, TextInputStyle, Role } = require("discord.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -7,7 +7,7 @@ module.exports = {
         .setDescription('Submits feedback via Slack integration'),
     async execute(interaction) {
         //Permission Check
-        if (!interaction.member.roles.cache.has(RoleID.staff || RoleID.moderator)) {
+        if (!interaction.member.roles.cache.has(RoleID.staff || RoleID.moderator || RoleID.expert || RoleID.community_manager)) {
             interaction.reply({ content: "This command can only be used by Administrators!", ephemeral: true });
             return;
         }
