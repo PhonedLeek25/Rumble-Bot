@@ -22,7 +22,7 @@ module.exports = {
 			}
 
 			try {
-				await command.execute(interaction);
+				await command.execute(interaction); //do command
 			} catch (error) {
 				console.error(error);
 				if (interaction.replied || interaction.deferred) {
@@ -42,22 +42,22 @@ module.exports = {
 		}
 		else if (interaction.isModalSubmit()) {
 			console.log("Modal submission recieved, Custom ID: " + interaction.customId);
-			if (interaction.customId == "EmailAuthenticationModal") {
-				try {
+			try {
+				if (interaction.customId == "EmailAuthenticationModal") {
 					const { authenticateReplytoModal } = require('../commands/user-control/authenticateReplytoModal.js');
 					authenticateReplytoModal(interaction);
 				}
-				catch (error) {
-					console.error(error);
-					if (interaction.replied || interaction.deferred) {
-						await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
-					} else {
-						await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-					}
+				else if (interaction.customId == "feedbackModalSubmission") {
+					console.log("this modal is being replied to by the same command, no further action required.");
 				}
 			}
-			else if (interaction.customId == "feedbackModalSubmission") {
-
+			catch (error) {
+				console.error(error);
+				if (interaction.replied || interaction.deferred) {
+					await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
+				} else {
+					await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+				}
 			}
 		}
 		else {

@@ -76,10 +76,10 @@ for (const file of eventFiles) {
 	}
 }
 
-/* //Recieving slash commands interactions --> Migrated to ./events/interactionCreate.js
+/*//Recieving slash commands interactions --> Migrated to ./events/interactionCreate.js
 //You will receive an interaction for every slash command executed.
 //To respond, you need to create a listener for the Client#interactionCreate event that will execute code when your application receives an interaction. 
-client.on(Events.InteractionCreate, async interaction => { 
+client.on(Events.InteractionCreate, async interaction => {
 	//async before the method means that the function will either return (promise) a value or an error (why promise failed)
 	if (!interaction.isChatInputCommand()) return; //return if interaction is not a Command (the "isChatInputCommand" boolean).
 	console.log("Interaction received by " + interaction.user.displayName.toString() + ": " + interaction.commandName.toString());
@@ -96,7 +96,7 @@ client.on(Events.InteractionCreate, async interaction => {
 		await command.execute(interaction); //await is like async.
 	} catch (error) {
 		console.error(error);
-		if (interaction.replied || interaction.defercolor.RED) {
+		if (interaction.replied || interaction.deferred) {
 			await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
 		} else {
 			await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });

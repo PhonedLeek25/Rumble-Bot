@@ -1,4 +1,4 @@
-const { RoleID } = require("../../public_containers/RoleID.js");
+const { RoleID } = require("../../global_variables/RoleID.js");
 const { SlashCommandBuilder, ModalBuilder, ActionRowBuilder, TextInputBuilder, TextInputStyle } = require("discord.js");
 
 module.exports = {
@@ -19,16 +19,27 @@ module.exports = {
             .setCustomId('rumbleorthndr')
             .setLabel("Rumble or Thndr feedback?")
             .setStyle(TextInputStyle.Short);
-        const ActionRow1 = new ActionRowBuilder().addComponents(RumbleOrThndrInputField);
-        mymodal.addComponents(ActionRow1);
 
         const FeedbackInputField = new TextInputBuilder()
-            .setCustomId('feedback')
+            .setCustomId('actualfeedback')
             .setLabel("Feedback")
             .setStyle(TextInputStyle.Paragraph);
-        const ActionRow2 = new ActionRowBuilder().addComponents(FeedbackInputField);
-        mymodal.addComponents(ActionRow2);
 
+        const ActionRow1 = new ActionRowBuilder().addComponents(RumbleOrThndrInputField);
+        const ActionRow2 = new ActionRowBuilder().addComponents(FeedbackInputField);
+        mymodal.addComponents(ActionRow1, ActionRow2);
         await interaction.showModal(mymodal);
+        const filter = (interaction) => interaction.customId == 'feedbackModalSubmission';
+        //wait for modal submission 
+
+        interaction
+            .awaitModalSubmit({ filter, time: 120_000 }) //wait 2 minutes
+            .then((modalInteraction) => {
+                const RumbleOrThndrValue = modalInteraction.fields.getInputValue('rumbleorthndr');
+                const FeedbackInputValue = modalInteraction.fields.getInputValue('actualfeedback');
+                const message = `You're Feeback for ${RumbleOrThndrValue} is: \n${FeedbackInputValue}`;
+                //modalInteraction.user.send(message);
+                modalInteraction.reply(message);
+            })
     },
 };
