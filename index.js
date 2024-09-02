@@ -7,8 +7,7 @@ const { color } = require("./public_containers/color.js");
 const { RoleID } = require("./public_containers/RoleID.js");
 const { channelID } = require("./public_containers/channelID.js");
 const { Client, GatewayIntentBits, Collection, Events, ActivityType, PresenceUpdateStatus, EmbedBuilder, managerToFetchingStrategyOptions,
-	GuildDefaultMessageNotifications, Guild,
-	Colors } = require("discord.js");
+	GuildDefaultMessageNotifications, Guild, Colors } = require("discord.js");
 const client = new Client({ //DECLARE CLIENT ==> Includes: Intents.
 	intents: [
 		GatewayIntentBits.Guilds,
