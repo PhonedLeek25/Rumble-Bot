@@ -33,7 +33,7 @@ module.exports = {
         //wait for modal submission 
 
         interaction
-            .awaitModalSubmit({ filter, time: 120_000 }) //wait 2 minutes
+            .awaitModalSubmit({ filter, time: 300_000 }) //wait 5 minutes
             .then((modalInteraction) => {
                 const RumbleOrThndrValue = modalInteraction.fields.getTextInputValue('rumbleorthndr');
                 const FeedbackInputValue = modalInteraction.fields.getTextInputValue('actualfeedback');
