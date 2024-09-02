@@ -35,9 +35,9 @@ module.exports = {
         interaction
             .awaitModalSubmit({ filter, time: 120_000 }) //wait 2 minutes
             .then((modalInteraction) => {
-                const RumbleOrThndrValue = modalInteraction.fields.getInputValue('rumbleorthndr');
-                const FeedbackInputValue = modalInteraction.fields.getInputValue('actualfeedback');
-                const message = `You're Feeback for ${RumbleOrThndrValue} is: \n${FeedbackInputValue}`;
+                const RumbleOrThndrValue = modalInteraction.fields.getTextInputValue('rumbleorthndr');
+                const FeedbackInputValue = modalInteraction.fields.getTextInputValue('actualfeedback');
+                const message = `You're Feeback for **__${RumbleOrThndrValue}__** is: \n\`\`\`${FeedbackInputValue}\`\`\``;
                 //modalInteraction.user.send(message);
                 modalInteraction.reply(message);
             })
