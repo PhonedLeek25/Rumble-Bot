@@ -7,7 +7,8 @@ const { color } = require("./public_containers/color.js");
 const { RoleID } = require("./public_containers/RoleID.js");
 const { channelID } = require("./public_containers/channelID.js");
 const { Client, GatewayIntentBits, Collection, Events, ActivityType, PresenceUpdateStatus, EmbedBuilder, managerToFetchingStrategyOptions,
-	GuildDefaultMessageNotifications, Guild } = require("discord.js");
+	GuildDefaultMessageNotifications, Guild,
+	Colors } = require("discord.js");
 const client = new Client({ //DECLARE CLIENT ==> Includes: Intents.
 	intents: [
 		GatewayIntentBits.Guilds,
@@ -327,20 +328,27 @@ client.on("guildScheduledEventUpdate", async (oldevent, newevent) => {
 client.on("guildScheduledEventDelete", async (oldevent) => {
 	if (current_events.length < 1) { console.log(`event ${oldevent.name} canceled but since no current events are running it will be ignored.`); return; }
 	console.log("recieved guildScheduledEventDelete event");
-	client.channels.cache.get(channelID.staff_alerts).send(`An event has been deleted. Please check <#${channelID.commands_and_testing}> for details.`);
-	const index = current_events.findIndex(x => x.id === oldevent.id);
-	const myevent = current_events[index];
-	current_events[index] = {
-		id: myevent.id,
-		name: myevent.name,
-		channelid: myevent.channelId,
-		description: myevent.description,
-		startAt: myevent.scheduledStartAt,
-		url: myevent.url,
-		status: myevent.status,
-		expert_ping: myevent.expertRolePing,
-		mode: "canceled"
-	};
+	//attempt to remove from memory
+	try {
+		const index = current_events.findIndex(x => x.id === oldevent.id);
+		const myevent = current_events[index];
+		current_events[index] = {
+			id: myevent.id,
+			name: myevent.name,
+			channelid: myevent.channelId,
+			description: myevent.description,
+			startAt: myevent.scheduledStartAt,
+			url: myevent.url,
+			status: myevent.status,
+			expert_ping: myevent.expertRolePing,
+			mode: "canceled"
+		};
+	}
+	//was not found in memory
+	catch (err) {
+		console.log(`event ${oldevent.name} was cancelled but ${color.RED}did not find a matching event in memory${color.RESET}, so it was ignored.`);
+		return;
+	}
 
 	if (myevent.startAt < (1000 * 60 * 60)) { //if <1hr
 		client.channels.cache.get(channelID.staff_alerts).send(`Warning, the deleted event "${myevent.name}" was starting in <1hr.` +
@@ -348,7 +356,6 @@ client.on("guildScheduledEventDelete", async (oldevent) => {
 	}
 
 	await client.channels.cache.get(channelID.commands_and_testing).send("# EVENT DELETION!");
-	await client.channels.cache.get(channelID.commands_and_testing).send("## old:");
 	await client.channels.cache.get(channelID.commands_and_testing).send("id: " + oldevent.id);
 	await client.channels.cache.get(channelID.commands_and_testing).send("name: " + oldevent.name);
 	await client.channels.cache.get(channelID.commands_and_testing).send("channelid: " + oldevent.channelid);
