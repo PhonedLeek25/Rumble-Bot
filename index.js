@@ -178,28 +178,28 @@ client.on("guildScheduledEventCreate", async (myevent) => {
 	//Automated Notifications:
 	const eventname = myevent.name;
 	let tripped = false; let error = false; let expertRolePing;
-	if (eventname.includes("Sergio") || eventname.includes("sergio")) {
+	if (eventname.includes("Sergio") || eventname.includes("sergio") || myevent.channelId == channelID.sergio_stage) {
 		if (tripped) { error = true; }
 		else { tripped = true; }
 		expertRolePing = "<@&" + RoleID.sergio + ">";
 	}
 	if (eventname.includes("Abdelkhalek") || eventname.includes("Abdel Khalek") || eventname.includes("Abdel khalek") ||
-		eventname.includes("abdelkhalek")) {
+		eventname.includes("abdelkhalek") || myevent.channelId == channelID.abdelkhalek_stage) {
 		if (tripped) { error = true; }
 		else { tripped = true; }
 		expertRolePing = "<@&" + RoleID.abdelkhalek + ">";
 	}
-	if (eventname.includes("Alfy") || eventname.includes("alfy")) {
+	if (eventname.includes("Alfy") || eventname.includes("alfy") || myevent.channelId == channelID.alfy_stage) {
 		if (tripped) { error = true; }
 		else { tripped = true; }
 		expertRolePing = "<@&" + RoleID.alfy + ">";
 	}
-	if (eventname.includes("Shams") || eventname.includes("shams")) {
+	if (eventname.includes("Shams") || eventname.includes("shams") || myevent.channelId == channelID.shams_stage) {
 		if (tripped) { error = true; }
 		else { tripped = true; }
 		expertRolePing = "<@&" + RoleID.shams + ">";
 	}
-	if (eventname.includes("Hefnawi") || eventname.includes("hefnawi")) {
+	if (eventname.includes("Hefnawi") || eventname.includes("hefnawi") || myevent.channelId == channelID.hefnawi_stage) {
 		if (tripped) { error = true; }
 		else { tripped = true; }
 		expertRolePing = "<@&" + RoleID.hefnawi + ">";
@@ -268,12 +268,22 @@ client.on("guildScheduledEventUpdate", async (oldevent, newevent) => {
 	console.log("recieved guildScheduledEventUpdate event");
 	let expertRolePing;
 	const eventname = newevent.name;
-	if (eventname.includes("Sergio") || eventname.includes("sergio")) { expertRolePing = "<@&" + RoleID.sergio + ">"; }
-	else if (eventname.includes("Abdelkhalek") || eventname.includes("Abdel Khalek") || eventname.includes("Abdel khalek") ||
-		eventname.includes("abdelkhalek") || eventname.includes("AbdelKhalek")) { expertRolePing = "<@&" + RoleID.abdelkhalek + ">"; }
-	else if (eventname.includes("Alfy") || eventname.includes("alfy")) { expertRolePing = "<@&" + RoleID.alfy + ">"; }
-	else if (eventname.includes("Shams") || eventname.includes("shams")) { expertRolePing = "<@&" + RoleID.shams + ">"; }
-	else if (eventname.includes("Hefnawi") || eventname.includes("hefnawi")) { expertRolePing = "<@&" + RoleID.hefnawi + ">"; }
+	if (eventname.includes("Sergio") || eventname.includes("sergio") || myevent.channelId == channelID.sergio_stage) {
+		expertRolePing = "<@&" + RoleID.sergio + ">";
+	}
+	if (eventname.includes("Abdelkhalek") || eventname.includes("Abdel Khalek") || eventname.includes("Abdel khalek") ||
+		eventname.includes("abdelkhalek") || newevent.channelId == channelID.abdelkhalek_stage) {
+		expertRolePing = "<@&" + RoleID.abdelkhalek + ">";
+	}
+	if (eventname.includes("Alfy") || eventname.includes("alfy") || newevent.channelId == channelID.alfy_stage) {
+		expertRolePing = "<@&" + RoleID.alfy + ">";
+	}
+	if (eventname.includes("Shams") || eventname.includes("shams") || newevent.channelId == channelID.shams_stage) {
+		expertRolePing = "<@&" + RoleID.shams + ">";
+	}
+	if (eventname.includes("Hefnawi") || eventname.includes("hefnawi") || newevent.channelId == channelID.hefnawi_stage) {
+		expertRolePing = "<@&" + RoleID.hefnawi + ">";
+	}
 	else {
 		const error_msg = "<@&1235756435636486164> An event \"" + eventname + "\" was __**changed**__ but I was not able to " +
 			"figure out which expert its for!" + " Check " + `<#${channelID.commands_and_testing}>` + " for more details";
@@ -616,7 +626,7 @@ client.on("ready", async () => {
 //"You can also use headers by having \\# then a spacebar afterwards. # makes H1, ## H2, and ### H3.\n";
 	client.channels.cache.get(CUSTOM_CHANNEL_ID).send(message);
 });*/
-//Verification Required
+/* //Verification Required
 client.on("ready", async () => {
 	if (!SEND_CUSTOM_MESSAGE) return;
 	let message =
@@ -632,7 +642,7 @@ client.on("ready", async () => {
 
 إذا كنت قد حاولت التحقق باستخدام الرابط أعلاه ولا يزال اشتراكك في رَمْبِل نشطًا، يرجى فتح تذكرة جديدة في ⁠<#1235771422563893298>`
 	client.channels.cache.get(channelID.subscription_required).send(message);
-});
+});*/
 
 //-----------------------------------------LOGIN-----------------------------------------//
 client.login(process.env.DISCORD_TOKEN);
