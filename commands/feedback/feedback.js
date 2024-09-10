@@ -6,6 +6,9 @@ module.exports = {
         .setName('feedback')
         .setDescription('Submits feedback via Slack integration'),
     async execute(interaction) {
+        //ON HOLD
+        interaction.reply({ ephemeral: true, content: "command temporarily disabled." });
+        return;
         //Permission Check
         if (!interaction.member.roles.cache.has(RoleID.staff || RoleID.moderator || RoleID.expert || RoleID.community_manager)) {
             interaction.reply({ content: "This command can only be used by Administrators!", ephemeral: true });
