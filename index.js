@@ -1,5 +1,7 @@
 //<ctrl+k (or l on pc?)> + <ctrl+1> to collapse all
 require("dotenv").config();
+const { crashCheck } = require("./private_containers/crash-handling/crash-check.js");
+crashCheck(); //first thing to run. no point running anything else if you crash.
 const fs = require("node:fs"); //NODE.JS's Native File System (choose directory/file navigation)
 const path = require("node:path"); //Node.js's Native Pathing Utility Module. helps construct paths to files and directories & automatically detects OS.
 const { UpvoteContainer, OnNewMessage } = require("./commands/upvoting/UpvoteContainer.js"); //Fetch UpvoteContainer
@@ -173,7 +175,6 @@ client.on("messageReactionAdd", async (msgreactadd) => {
 });
 
 const { scheduledAnnounce, current_events } = require('./private_containers/scheduledAnnounce.js');
-const { stringify } = require("node:querystring");
 client.on("guildScheduledEventCreate", async (myevent) => {
 	//Automated Notifications:
 	const eventname = myevent.name;
