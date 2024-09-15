@@ -1,46 +1,56 @@
+const { exit } = require("process");
+const { color } = require("../../global_variables/color.js");
+const fs = require("fs");
+
+async function runClient() {
+    require("dotenv").config();
+    const { Client, GatewayIntentBits } = require("discord.js");
+    const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.DirectMessages] });
+    await client.login(process.env.DISCORD_TOKEN);
+    console.log("logged in");
+
+    //notify of crash
+    console.log(color.YELLOW + "crash-check.js: waiting for Ready!" + color.RESET);
+    await new Promise(r => setTimeout(r, 3000));
+    console.log(color.YELLOW + "crash-check.js: done waiting for Ready!" + color.RESET);
+
+    const channel = client.channels.cache.get("1235756921521180722");
+    await channel.send("<@261216694901538816> The bot has crashed!");
+    return;
+}
+
 function crashCheck() {
-
-    const crashObject = { "crashed": false };
-
-    const fs = require("fs");
+    const filePath = "./private_containers/crash-handling/crash-state.json";
+    let myObject = { crashed: "N/A" };
     try {
-        let myObject;
-        fs.readFile("./private_containers/crash-handling/crash-state.json", (error, data) => {
-            if (error) { throw error; };
-            console.log("umm");
-            myObject = JSON.parse(data);
-            console.log("data = " + data);
-        });
-        exit();
-        console.log("myObject: " + myObject);
-        if (myObject.crashed == true) {
+        data = fs.readFileSync(filePath);
+        console.log("data = " + data);
+        myObject = JSON.parse(data);
+        console.log("myObject:"); console.log(myObject);
+
+        if (myObject.crashed === true) {
             //start
-            require("dotenv").config();
-            const { Client, GatewayIntentBits } = require("discord.js");
-            const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.DirectMessages] });
-            client.login(process.env.DISCORD_TOKEN);
-            //notify of crash
-            client.on("ready", () => {
-                client.channels.cache.get("1235756921521180722").send("<@261216694901538816> The bot has crashed!");
-            })
-            //end crash event
-            myObject = JSON.stringify(crashObject);
-            fs.writeFile("crash-state.json", myObject, (error) => { if (error) { throw error } });
-            //end this nightmare
-            console.log("exiting...");
-            exit();
+            console.log(color.RED + "crash-state:" + myObject.crashed + color.RESET);
+            runClient().then(() => {
+                //end crash event
+                console.log("changing crash state..");
+                myObject = { crashed: false };
+                fs.writeFileSync(filePath, JSON.stringify(myObject), (error) => { if (error) { throw error } });
+                //end this nightmare
+                console.log("exiting...");
+                exit();
+            });
         }
-        else if (myObject.crashed == false) {
-            console.log("crash-state: false");
-        }
+        else if (myObject.crashed === false) { console.log(color.GREEN + "crash-state: " + myObject.crashed + color.RESET); }
         else {
+            console.log("detected something other than true/false for crash state!\nchanging crash state..");
+            myObject = { crashed: false };
+            fs.writeFileSync(filePath, JSON.stringify(myObject), (error) => { if (error) { throw error } });
             throw new Error("detected something other than true/false for crash state!");
+
         }
     }
-    catch (err) {
-        console.log(err);
-        console.log("error caught, continuing with program exection...");
-    }
+    catch (err) { console.log(err); }
 }
 
 module.exports = { crashCheck };

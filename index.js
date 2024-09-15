@@ -1,7 +1,10 @@
 //<ctrl+k (or l on pc?)> + <ctrl+1> to collapse all
-require("dotenv").config();
 const { crashCheck } = require("./private_containers/crash-handling/crash-check.js");
 crashCheck(); //first thing to run. no point running anything else if you crash.
+//new Promise(r => setTimeout(r, CRASH_WAIT_TIME)).then(() => { console.log("done waiting for program to detect crashes."); });
+
+
+require("dotenv").config();
 const fs = require("node:fs"); //NODE.JS's Native File System (choose directory/file navigation)
 const path = require("node:path"); //Node.js's Native Pathing Utility Module. helps construct paths to files and directories & automatically detects OS.
 const { UpvoteContainer, OnNewMessage } = require("./commands/upvoting/UpvoteContainer.js"); //Fetch UpvoteContainer
