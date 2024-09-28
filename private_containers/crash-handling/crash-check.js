@@ -23,14 +23,14 @@ function crashCheck() {
     const filePath = "./private_containers/crash-handling/crash-state.json";
     let myObject = { crashed: "N/A" };
     try {
-        data = fs.readFileSync(filePath);
+        const data = fs.readFileSync(filePath);
         console.log("data = " + data);
         myObject = JSON.parse(data);
         console.log("myObject:"); console.log(myObject);
 
         if (myObject.crashed === true) {
             //start
-            console.log(color.RED + "crash-state:" + myObject.crashed + color.RESET);
+            console.log("crash-state: " + color.RED + myObject.crashed + color.RESET);
             runClient().then(() => {
                 //end crash event
                 console.log("changing crash state..");
@@ -41,16 +41,21 @@ function crashCheck() {
                 exit();
             });
         }
-        else if (myObject.crashed === false) { console.log(color.GREEN + "crash-state: " + myObject.crashed + color.RESET); }
+        else if (myObject.crashed === false) { console.log("crash-state: " + color.GREEN + myObject.crashed + color.RESET); }
         else {
-            console.log("detected something other than true/false for crash state!\nchanging crash state..");
+            console.log(color.RED + "detected something other than true/false for crash state!\nchanging crash state.." + color.RESET);
             myObject = { crashed: false };
             fs.writeFileSync(filePath, JSON.stringify(myObject), (error) => { if (error) { throw error } });
             throw new Error("detected something other than true/false for crash state!");
 
         }
     }
-    catch (err) { console.log(err); }
+    catch (err) {
+        console.log(err);
+        console.log("crash-state: " + color.RED + "UNDEFINED" + color.RESET);
+        myObject = { crashed: false };
+        fs.writeFileSync(filePath, JSON.stringify(myObject), (error) => { if (error) { throw error } });
+    }
 }
 
 module.exports = { crashCheck };
