@@ -53,6 +53,7 @@ function crashCheck() {
     catch (err) {
         console.log(err);
         console.log("crash-state: " + color.RED + "UNDEFINED" + color.RESET);
+        console.log("Overwriting..");
         myObject = { crashed: false };
         fs.writeFileSync(filePath, JSON.stringify(myObject), (error) => { if (error) { throw error } });
     }
