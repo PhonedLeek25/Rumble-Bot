@@ -272,7 +272,7 @@ client.on("guildScheduledEventUpdate", async (oldevent, newevent) => {
 	console.log("recieved guildScheduledEventUpdate event");
 	let expertRolePing;
 	const eventname = newevent.name;
-	if (eventname.includes("Sergio") || eventname.includes("sergio") || myevent.channelId == channelID.sergio_stage) {
+	if (eventname.includes("Sergio") || eventname.includes("sergio") || newevent.channelId == channelID.sergio_stage) {
 		expertRolePing = "<@&" + RoleID.sergio + ">";
 	}
 	if (eventname.includes("Abdelkhalek") || eventname.includes("Abdel Khalek") || eventname.includes("Abdel khalek") ||
