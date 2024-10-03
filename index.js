@@ -367,8 +367,8 @@ client.on("guildScheduledEventDelete", async (oldevent) => {
 	await client.channels.cache.get(channelID.commands_and_testing).send("status: " + oldevent.status);
 });
 
-const SEND_CUSTOM_MESSAGE = false;
-const CUSTOM_CHANNEL_ID = "1225049083669119019"; //Testing Channel ID: 1235756921521180722
+const SEND_CUSTOM_MESSAGE = true;
+const CUSTOM_CHANNEL_ID = "1235756921521180722"; //Testing Channel ID: 1235756921521180722
 
 /* //ExampleEmbed
 	client.on("ready", async () => 
@@ -636,23 +636,23 @@ client.on("ready", async () => {
 //"You can also use headers by having \\# then a spacebar afterwards. # makes H1, ## H2, and ### H3.\n";
 	client.channels.cache.get(CUSTOM_CHANNEL_ID).send(message);
 });*/
-/* //Verification Required
+/* //Verification Required - WARNING: always sends in channelID.subscription_required
 client.on("ready", async () => {
 	if (!SEND_CUSTOM_MESSAGE) return;
 	let message =
 		`# Subscription Required
-> 🔔 It seems you are not a Rumble <@&1264596999110656114>. If you are, please visit https://therumble.app/discord?utm_source=discord&utm_medium=discord&utm_campaign=verification_channel to verify your subscription!
+> 🔔 It seems you are not a Rumble <@&1264596999110656114>. If you are, please visit [this link](https://therumble.app/discord?utm_source=discord&utm_medium=discord&utm_campaign=verification_channel) to verify your subscription!
 > 
 > If you've already tried verifying with the link above and still have an active Rumble subscription, please open a new ticket in <#1235771422563893298>`
 	client.channels.cache.get(channelID.subscription_required).send(message);
 
 	message =
 		`# مطلوب الاشتراك
-🔔 يبدو أنك لست مشتركًا في رَمْبِل <@&1264596999110656114>. إذا كنت مشتركًا بالفعل، يرجى زيارة https://therumble.app/discord?utm_source=discord&utm_medium=discord&utm_campaign=verification_channel  للتحقق من اشتراكك!
+🔔 يبدو أنك لست مشتركًا في رَمْبِل <@&1264596999110656114>. إذا كنت مشتركًا بالفعل، يرجى زيارة [هذا الرابط الإلكتروني](https://therumble.app/discord?utm_source=discord&utm_medium=discord&utm_campaign=verification_channel)  للتحقق من اشتراكك!
 
 إذا كنت قد حاولت التحقق باستخدام الرابط أعلاه ولا يزال اشتراكك في رَمْبِل نشطًا، يرجى فتح تذكرة جديدة في ⁠<#1235771422563893298>`
 	client.channels.cache.get(channelID.subscription_required).send(message);
-});*/
+}); */
 
 //-----------------------------------------LOGIN-----------------------------------------//
 client.login(process.env.DISCORD_TOKEN);
