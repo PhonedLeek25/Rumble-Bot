@@ -177,7 +177,7 @@ client.on("messageReactionAdd", async (msgreactadd) => {
 	//console.log(`messageReactionAdd Listener: reaction added: ${msgreactadd.emoji}`)
 });
 
-const { scheduledAnnounce, current_events } = require('./private_containers/scheduledAnnounce.js');
+/*const { scheduledAnnounce, current_events } = require('./private_containers/scheduledAnnounce.js');
 client.on("guildScheduledEventCreate", async (myevent) => {
 	//Automated Notifications:
 	const eventname = myevent.name;
@@ -365,7 +365,7 @@ client.on("guildScheduledEventDelete", async (oldevent) => {
 	await client.channels.cache.get(channelID.commands_and_testing).send("desc: " + oldevent.description);
 	await client.channels.cache.get(channelID.commands_and_testing).send("url: " + oldevent.url);
 	await client.channels.cache.get(channelID.commands_and_testing).send("status: " + oldevent.status);
-});
+});*/
 
 const SEND_CUSTOM_MESSAGE = true;
 const CUSTOM_CHANNEL_ID = "1235756921521180722"; //Testing Channel ID: 1235756921521180722
