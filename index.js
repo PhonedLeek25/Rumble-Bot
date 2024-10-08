@@ -289,7 +289,7 @@ client.on("guildScheduledEventUpdate", async (oldevent, newevent) => {
 		expertRolePing = "<@&" + RoleID.hefnawi + ">";
 	}
 	else {
-		const error_msg = "<@&1235756435636486164> An event \"" + eventname + "\" was __**changed**__ but I was not able to " +
+		const error_msg = " An event \"" + eventname + "\" was __**changed**__ but I was not able to " +
 			"figure out which expert its for!" + " Check " + `<#${channelID.commands_and_testing}>` + " for more details";
 		await client.channels.cache.get(channelID.staff_alerts).send(error_msg);
 
